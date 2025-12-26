@@ -1,23 +1,23 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, String, Index, TIMESTAMP
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
 from app.core.database import Base
+import uuid
 
 
-class Analysis(Base):
-    __tablename__ = "analyses"
+class PlaylistAnalysis(Base):
+    __tablename__ = "playlist_analyses"
 
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    track_id = Column(String, nullable=False)
-    track_name = Column(String, nullable=False)
-    artist_name = Column(String, nullable=False)
-    mood_score = Column(Float, nullable=False)
-    energy_score = Column(Float, nullable=False)
-    valence_score = Column(Float, nullable=False)
-    danceability = Column(Float, nullable=False)
-    tempo = Column(Float, nullable=False)
-    analysis_data = Column(JSON, nullable=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
+    user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
+    # Note: user_id references auth.users(id) in Supabase
+    playlist_id = Column(String, nullable=False)
+    playlist_name = Column(String, nullable=False)
+    mood_results = Column(JSONB, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), server_default=func.now(), index=True)
 
-    user = relationship("User", back_populates="analyses") 
+    # Create indexes as specified in schema
+    __table_args__ = (
+        Index('idx_analyses_user_id', 'user_id'),
+        Index('idx_analyses_created_at', 'created_at', postgresql_ops={'created_at': 'DESC'}),
+    ) 
