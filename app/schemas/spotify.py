@@ -40,3 +40,16 @@ class SpotifyPlaylist(BaseModel):
 class SpotifyPlaylistsResponse(BaseModel):
     playlists: list[SpotifyPlaylist]
     total: int
+
+
+class SpotifyProfile(BaseModel):
+    id: str
+    display_name: Optional[str] = None
+    email: Optional[str] = None
+    image_url: Optional[str] = None
+    followers: Optional[int] = None
+    product: Optional[str] = None
+
+
+class SpotifyProfileResponse(BaseModel):
+    profile: SpotifyProfile

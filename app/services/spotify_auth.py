@@ -5,6 +5,16 @@ from urllib.parse import urlencode
 from app.core.config import settings
 
 
+def _ensure_spotify_config():
+    """
+    Validate Spotify configuration is present before making requests.
+    """
+    if not settings.SPOTIFY_CLIENT_ID or not settings.SPOTIFY_CLIENT_SECRET:
+        raise ValueError("Spotify client credentials are not configured")
+    if not settings.SPOTIFY_REDIRECT_URI:
+        raise ValueError("Spotify redirect URI is not configured")
+
+
 def generate_authorize_url(state: str) -> str:
     """
     Generate Spotify OAuth authorization URL.
@@ -15,11 +25,12 @@ def generate_authorize_url(state: str) -> str:
     Returns:
         str: Spotify authorization URL
     """
+    _ensure_spotify_config()
     params = {
         "client_id": settings.SPOTIFY_CLIENT_ID,
         "response_type": "code",
         "redirect_uri": settings.SPOTIFY_REDIRECT_URI,
-        "scope": "user-read-private user-read-email playlist-read-private playlist-read-collaborative",
+        "scope": settings.SPOTIFY_SCOPES,
         "state": state,
     }
     
@@ -36,6 +47,7 @@ async def exchange_code_for_tokens(code: str) -> Dict[str, any]:
     Returns:
         dict: Contains access_token, refresh_token, expires_in, token_type
     """
+    _ensure_spotify_config()
     async with httpx.AsyncClient() as client:
         response = await client.post(
             "https://accounts.spotify.com/api/token",
@@ -61,6 +73,7 @@ async def refresh_access_token(refresh_token: str) -> Dict[str, any]:
     Returns:
         dict: Contains access_token, expires_in, token_type
     """
+    _ensure_spotify_config()
     async with httpx.AsyncClient() as client:
         response = await client.post(
             "https://accounts.spotify.com/api/token",

@@ -70,6 +70,25 @@ async def get_user_playlists(access_token: str, limit: int = 50, offset: int = 0
         return response.json()
 
 
+async def get_user_profile(access_token: str) -> Dict:
+    """
+    Get the current user's Spotify profile.
+
+    Args:
+        access_token: Valid Spotify access token
+
+    Returns:
+        dict: Spotify API response with user profile
+    """
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            "https://api.spotify.com/v1/me",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+        response.raise_for_status()
+        return response.json()
+
+
 async def get_playlist_info(access_token: str, playlist_id: str) -> Dict:
     """
     Get playlist information.

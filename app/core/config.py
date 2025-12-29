@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Optional, Union
 from pydantic import AnyHttpUrl, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     SPOTIFY_CLIENT_ID: str = ""
     SPOTIFY_CLIENT_SECRET: str = ""
     SPOTIFY_REDIRECT_URI: str = "http://localhost:8000/api/v1/spotify/callback"
+    SPOTIFY_SCOPES: str = (
+        "user-read-private user-read-email playlist-read-private "
+        "playlist-read-collaborative"
+    )
+    # Optional deep link / frontend URL to redirect after callback
+    SPOTIFY_APP_REDIRECT_URI: Optional[str] = None
     
     # Environment
     ENVIRONMENT: str = "development"

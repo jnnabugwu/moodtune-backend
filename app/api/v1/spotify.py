@@ -1,9 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
+from fastapi.responses import RedirectResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime, timezone, timedelta
 from uuid import UUID
 import secrets
+from urllib.parse import urlencode
 from app.api.deps import get_current_user
+from app.core.config import settings
 from app.core.database import get_db
 from app.crud import spotify as crud_spotify
 from app.schemas import spotify as schemas_spotify
@@ -22,10 +25,17 @@ async def authorize_spotify(
     """
     # Generate state for CSRF protection
     state = secrets.token_urlsafe(32)
+    # TODO: Store this state temporarily and verify it in the callback
     # In production, you might want to store this state temporarily
     # and verify it in the callback
     
-    authorize_url = spotify_auth.generate_authorize_url(state)
+    try:
+        authorize_url = spotify_auth.generate_authorize_url(state)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e),
+        )
     return {"authorize_url": authorize_url, "state": state}
 
 
@@ -41,49 +51,57 @@ async def spotify_callback(
     Exchanges code for tokens and stores connection.
     """
     try:
-        # Exchange code for tokens
         token_data = await spotify_auth.exchange_code_for_tokens(code)
-        
-        # Get Spotify user ID
         spotify_user_id = await spotify_auth.get_spotify_user_id(
             token_data["access_token"]
         )
-        
-        # Calculate expiration time
         expires_at = datetime.now(timezone.utc) + timedelta(
             seconds=token_data.get("expires_in", 3600)
         )
-        
+
+        refresh_token = token_data.get("refresh_token")
         user_id = UUID(current_user["id"])
-        
-        # Check if connection already exists
         existing = await crud_spotify.get_spotify_connection(db, user_id)
-        
+
         if existing:
-            # Update existing connection
             connection = await crud_spotify.update_spotify_connection(
                 db,
                 existing,
                 token_data["access_token"],
-                token_data.get("refresh_token"),
+                refresh_token,
                 expires_at,
             )
+            refresh_token = connection.refresh_token
         else:
-            # Create new connection
-            connection = await crud_spotify.create_spotify_connection(
+            if not refresh_token:
+                raise ValueError("Missing refresh token from Spotify response")
+            await crud_spotify.create_spotify_connection(
                 db,
                 user_id,
                 spotify_user_id,
                 token_data["access_token"],
-                token_data["refresh_token"],
+                refresh_token,
                 expires_at,
             )
-        
+
+        if settings.SPOTIFY_APP_REDIRECT_URI:
+            success_query = urlencode(
+                {"status": "success", "spotify_user_id": spotify_user_id}
+            )
+            redirect_url = f"{settings.SPOTIFY_APP_REDIRECT_URI}?{success_query}"
+            return RedirectResponse(url=redirect_url)
+
         return {
             "message": "Spotify connected successfully",
             "spotify_user_id": spotify_user_id,
         }
     except Exception as e:
+        if settings.SPOTIFY_APP_REDIRECT_URI:
+            error_query = urlencode(
+                {"status": "error", "message": str(e)[:200]}
+            )
+            redirect_url = f"{settings.SPOTIFY_APP_REDIRECT_URI}?{error_query}"
+            return RedirectResponse(url=redirect_url, status_code=status.HTTP_400_BAD_REQUEST)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Failed to connect Spotify: {str(e)}",
@@ -105,6 +123,43 @@ async def get_spotify_status(
             spotify_user_id=connection.spotify_user_id,
         )
     return schemas_spotify.SpotifyStatusResponse(connected=False)
+
+
+@router.get("/profile", response_model=schemas_spotify.SpotifyProfileResponse)
+async def get_spotify_profile(
+    current_user: dict = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Fetch the connected Spotify user profile."""
+    user_id = UUID(current_user["id"])
+    try:
+        access_token = await spotify_api.get_valid_spotify_token(user_id, db)
+        profile_data = await spotify_api.get_user_profile(access_token)
+
+        images = profile_data.get("images") or []
+        image_url = images[0]["url"] if images else None
+        followers = (profile_data.get("followers") or {}).get("total")
+
+        return schemas_spotify.SpotifyProfileResponse(
+            profile=schemas_spotify.SpotifyProfile(
+                id=profile_data.get("id", ""),
+                display_name=profile_data.get("display_name"),
+                email=profile_data.get("email"),
+                image_url=image_url,
+                followers=followers,
+                product=profile_data.get("product"),
+            )
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to fetch Spotify profile: {str(e)}",
+        )
 
 
 @router.post("/disconnect")
