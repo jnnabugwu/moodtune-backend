@@ -5,6 +5,8 @@
 .env.test
 .env.production
 
+venv/
+.venv/
 # Python
 __pycache__/
 *.py[cod]
@@ -29,8 +31,8 @@ wheels/
 MANIFEST
 
 # Virtual environments
-venv/
-env/
+.venv/
+.env/
 ENV/
 env.bak/
 venv.bak/
