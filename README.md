@@ -4,7 +4,6 @@ Uses Supabase Postgres as the database, deployed on Railway.
 
 ## Environment variables
 Copy `env.sample` to `.env` (Railway variables) and fill in:
-- `DATABASE_URL` — Supabase Postgres with async driver, e.g. `postgresql+asyncpg://postgres:<password>@<supabase_host>:5432/postgres`
 - `SUPABASE_URL`, `SUPABASE_KEY` (anon), `SUPABASE_SERVICE_KEY` (service role)
 - `SECRET_KEY`, `ALGORITHM`, token expiry values
 - `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET`, `SPOTIFY_REDIRECT_URI`, optional `SPOTIFY_APP_REDIRECT_URI`
