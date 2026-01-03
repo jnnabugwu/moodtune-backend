@@ -2,13 +2,14 @@ import httpx
 from datetime import datetime, timezone, timedelta
 from typing import List, Dict, Optional, Union
 from uuid import UUID
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-from app.models.spotify_connection import SpotifyConnection
+import asyncio
+from app.core.supabase import get_supabase_service_client
 from app.services.spotify_auth import refresh_access_token
 
+_supabase = get_supabase_service_client()
 
-async def get_valid_spotify_token(user_id: Union[str, UUID], db: AsyncSession) -> str:
+
+async def get_valid_spotify_token(user_id: Union[str, UUID]) -> str:
     """
     Get valid Spotify token for user, refreshing if needed.
     
@@ -22,30 +23,63 @@ async def get_valid_spotify_token(user_id: Union[str, UUID], db: AsyncSession) -
     Raises:
         ValueError: If no Spotify connection exists for user
     """
-    # Get connection from database
-    stmt = select(SpotifyConnection).where(SpotifyConnection.user_id == user_id)
-    result = await db.execute(stmt)
-    connection = result.scalar_one_or_none()
-    
+    loop = asyncio.get_running_loop()
+
+    def _fetch():
+        resp = (
+            _supabase.table("spotify_connections")
+            .select("*")
+            .eq("user_id", str(user_id))
+            .maybe_single()
+            .execute()
+        )
+        if not resp or resp.data is None:
+            return None
+        if getattr(resp, "error", None):
+            raise ValueError(resp.error.message)
+        return resp.data
+
+    connection = await loop.run_in_executor(None, _fetch)
+
     if not connection:
         raise ValueError("No Spotify connection found for user")
-    
-    # Check if token needs refresh
-    if datetime.now(timezone.utc) >= connection.expires_at:
-        # Refresh token
-        token_data = await refresh_access_token(connection.refresh_token)
-        connection.access_token = token_data["access_token"]
-        connection.expires_at = datetime.now(timezone.utc) + timedelta(
+
+    # Parse expires_at
+    expires_at_str = connection.get("expires_at")
+    expires_at = (
+        datetime.fromisoformat(expires_at_str)
+        if isinstance(expires_at_str, str)
+        else expires_at_str
+    )
+
+    if datetime.now(timezone.utc) >= expires_at:
+        token_data = await refresh_access_token(connection["refresh_token"])
+        new_expires_at = datetime.now(timezone.utc) + timedelta(
             seconds=token_data.get("expires_in", 3600)
         )
-        # Update refresh token if provided (Spotify sometimes returns new one)
-        if "refresh_token" in token_data:
-            connection.refresh_token = token_data["refresh_token"]
-        connection.updated_at = datetime.now(timezone.utc)
-        await db.commit()
-        await db.refresh(connection)
-    
-    return connection.access_token
+
+        def _update():
+            resp = (
+                _supabase.table("spotify_connections")
+                .update(
+                    {
+                        "access_token": token_data["access_token"],
+                        "expires_at": new_expires_at.isoformat(),
+                        "refresh_token": token_data.get(
+                            "refresh_token", connection["refresh_token"]
+                        ),
+                        "updated_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                )
+                .eq("id", connection["id"])
+                .execute()
+            )
+            data = resp.data or []
+            return data[0] if data else connection
+
+        connection = await loop.run_in_executor(None, _update)
+
+    return connection["access_token"]
 
 
 async def get_user_playlists(access_token: str, limit: int = 50, offset: int = 0) -> Dict:
