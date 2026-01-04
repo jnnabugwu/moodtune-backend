@@ -1,6 +1,22 @@
+import os
 from typing import List, Optional, Union
 from pydantic import AnyHttpUrl, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+ENV_FILE_MAP = {
+    "development": "dev.env",
+    "staging": "staging.env",
+    "production": ".env",
+}
+
+
+def _select_env_file() -> str:
+    """
+    Pick an environment file based on ENVIRONMENT; defaults to dev.
+    """
+    env = os.getenv("ENVIRONMENT", "development").lower()
+    return ENV_FILE_MAP.get(env, ".env")
 
 
 class Settings(BaseSettings):
@@ -22,23 +38,23 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     # Authentication
-    SECRET_KEY: str = "your_secret_key_here"
+    SECRET_KEY: Optional[str] = None
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     # Supabase
-    SUPABASE_URL: str = "https://ptifbqogxdfuposlmbsp.supabase.co"
-    SUPABASE_KEY: str = ""  # Anon key for frontend
-    SUPABASE_SERVICE_KEY: str = ""  # Service role key for backend
+    SUPABASE_URL: Optional[str] = None
+    SUPABASE_KEY: Optional[str] = None  # Anon key for frontend
+    SUPABASE_SERVICE_KEY: Optional[str] = None  # Service role key for backend
     
     # Database
-    DATABASE_URL: str = "postgresql+asyncpg://user:password@localhost/moodtune"
+    DATABASE_URL: Optional[str] = None
     
     # Spotify API
-    SPOTIFY_CLIENT_ID: str = ""
-    SPOTIFY_CLIENT_SECRET: str = ""
-    SPOTIFY_REDIRECT_URI: str = "http://localhost:8000/api/v1/spotify/callback"
+    SPOTIFY_CLIENT_ID: Optional[str] = None
+    SPOTIFY_CLIENT_SECRET: Optional[str] = None
+    SPOTIFY_REDIRECT_URI: Optional[str] = None
     SPOTIFY_SCOPES: str = (
         "user-read-private user-read-email playlist-read-private "
         "playlist-read-collaborative"
@@ -52,7 +68,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(
         case_sensitive=True,
-        env_file=".env"
+        env_file=_select_env_file()
     )
 
 
