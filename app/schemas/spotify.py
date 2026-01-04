@@ -48,6 +48,7 @@ class SpotifyProfile(BaseModel):
     email: Optional[str] = None
     image_url: Optional[str] = None
     followers: Optional[int] = None
+    playlists_count: Optional[int] = None
     product: Optional[str] = None
 
 
