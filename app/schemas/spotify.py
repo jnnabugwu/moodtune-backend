@@ -35,6 +35,7 @@ class SpotifyPlaylist(BaseModel):
     description: Optional[str] = None
     tracks_count: Optional[int] = None
     image_url: Optional[str] = None
+    owner_display_name: Optional[str] = None
 
 
 class SpotifyPlaylistsResponse(BaseModel):

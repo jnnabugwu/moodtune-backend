@@ -215,6 +215,7 @@ async def get_playlists(
                     description=item.get("description"),
                     tracks_count=item.get("tracks", {}).get("total"),
                     image_url=image_url,
+                    owner_display_name=(item.get("owner") or {}).get("display_name"),
                 )
             )
         
