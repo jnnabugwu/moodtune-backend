@@ -48,9 +48,6 @@ class Settings(BaseSettings):
     SUPABASE_KEY: Optional[str] = None  # Anon key for frontend
     SUPABASE_SERVICE_KEY: Optional[str] = None  # Service role key for backend
     
-    # Database
-    DATABASE_URL: Optional[str] = None
-    
     # Spotify API
     SPOTIFY_CLIENT_ID: Optional[str] = None
     SPOTIFY_CLIENT_SECRET: Optional[str] = None

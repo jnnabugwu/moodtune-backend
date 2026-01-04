@@ -2,12 +2,8 @@ import httpx
 import pytest
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
 
 from app.core import config as config_module
-from app.core.database import Base
-from app.models.spotify_connection import SpotifyConnection
 from app.services import spotify_api, spotify_auth
 
 
@@ -31,44 +27,81 @@ def test_generate_authorize_url_uses_settings(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_get_valid_spotify_token_refreshes_expired(monkeypatch):
-    engine = create_async_engine("sqlite+aiosqlite:///:memory:", echo=False)
-    TestingSessionLocal = sessionmaker(
-        engine, class_=AsyncSession, expire_on_commit=False
-    )
+    user_id = uuid4()
+    expired_at = datetime.now(timezone.utc) - timedelta(seconds=10)
 
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Fake Supabase client/response chain
+    class FakeResp:
+        def __init__(self, data=None, error=None):
+            self.data = data
+            self.error = error
 
-    async with TestingSessionLocal() as session:
-        expired_connection = SpotifyConnection(
-            user_id=uuid4(),
-            spotify_user_id="spotify_user",
-            access_token="old_token",
-            refresh_token="refresh_token",
-            expires_at=datetime.now(timezone.utc) - timedelta(seconds=10),
-        )
-        session.add(expired_connection)
-        await session.commit()
-        await session.refresh(expired_connection)
+    class FakeTable:
+        def __init__(self, records):
+            self.records = records
+            self._updates = None
+            self._user = None
 
-        async def fake_refresh(token: str):
-            return {
-                "access_token": "new_token",
-                "expires_in": 3600,
-                "refresh_token": "new_refresh",
-            }
+        def select(self, *args, **kwargs):
+            return self
 
-        monkeypatch.setattr(spotify_api, "refresh_access_token", fake_refresh)
+        def eq(self, field, value):
+            self._user = value
+            return self
 
-        token = await spotify_api.get_valid_spotify_token(
-            expired_connection.user_id, session
-        )
+        def maybe_single(self):
+            return self
 
-        await session.refresh(expired_connection)
-        assert token == "new_token"
-        assert expired_connection.access_token == "new_token"
-        assert expired_connection.refresh_token == "new_refresh"
-        assert expired_connection.expires_at > datetime.now(timezone.utc)
+        def update(self, updates):
+            self._updates = updates
+            return self
+
+        def execute(self):
+            if self._updates is not None:
+                rec = self.records[0]
+                rec.update(self._updates)
+                return FakeResp([rec])
+            rec = next(
+                (r for r in self.records if str(r["user_id"]) == self._user), None
+            )
+            return FakeResp(rec)
+
+    class FakeSupabase:
+        def __init__(self, records):
+            self.records = records
+
+        def table(self, name):
+            return FakeTable(self.records)
+
+    records = [
+        {
+            "id": "conn1",
+            "user_id": str(user_id),
+            "spotify_user_id": "spotify_user",
+            "access_token": "old_token",
+            "refresh_token": "refresh_token",
+            "expires_at": expired_at.isoformat(),
+            "updated_at": None,
+        }
+    ]
+
+    async def fake_refresh(token: str):
+        return {
+            "access_token": "new_token",
+            "expires_in": 3600,
+            "refresh_token": "new_refresh",
+        }
+
+    monkeypatch.setattr(spotify_api, "_supabase", FakeSupabase(records))
+    monkeypatch.setattr(spotify_api, "refresh_access_token", fake_refresh)
+
+    token = await spotify_api.get_valid_spotify_token(user_id)
+
+    updated = records[0]
+    assert token == "new_token"
+    assert updated["access_token"] == "new_token"
+    assert updated["refresh_token"] == "new_refresh"
+    assert datetime.fromisoformat(updated["expires_at"]) > datetime.now(timezone.utc)
 
 
 @pytest.mark.asyncio

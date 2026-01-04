@@ -14,7 +14,6 @@ This document outlines the testing strategy for the MoodTune Backend API, includ
    SUPABASE_URL=https://xxxxx.supabase.co
    SUPABASE_KEY=your_anon_key
    SUPABASE_SERVICE_KEY=your_service_role_key
-   DATABASE_URL=postgresql+asyncpg://postgres:password@db.xxxxx.supabase.co:5432/postgres
    SPOTIFY_CLIENT_ID=your_client_id
    SPOTIFY_CLIENT_SECRET=your_client_secret
    SPOTIFY_REDIRECT_URI=http://localhost:8000/api/v1/spotify/callback

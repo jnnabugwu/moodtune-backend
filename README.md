@@ -1,6 +1,6 @@
 # MoodTune Backend (FastAPI)
 
-Uses Supabase Postgres as the database, deployed on Railway.
+Uses Supabase Postgres as the database via the Supabase Python client, deployed on Railway.
 
 ## Environment variables
 Copy `env.sample` to `.env` (Railway variables) and fill in:
@@ -17,7 +17,7 @@ Copy `env.sample` to `.env` (Railway variables) and fill in:
 - Health check: `/health`
 
 ## Supabase notes
-- Keep `+asyncpg` in `DATABASE_URL` for SQLAlchemy async.
+- Backend uses the Supabase Python client directly (no SQLAlchemy).
 - Use the service role key in the backend if RLS is enabled on your tables.
 - Ensure the Supabase project allows connections from Railway (no IP allowlist or add Railway egress IPs).
 

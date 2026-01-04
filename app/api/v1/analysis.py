@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 from typing import List
 from app.api.deps import get_current_user
-from app.core.database import get_db
 from app.crud import analysis as crud_analysis
 from app.schemas import analysis as schemas_analysis
 from app.services import spotify_api
@@ -16,7 +14,6 @@ router = APIRouter()
 async def analyze_playlist(
     playlist_id: str,
     current_user: dict = Depends(get_current_user),
-    db: AsyncSession = Depends(get_db),
 ):
     """
     Analyze a playlist's mood.
@@ -26,7 +23,7 @@ async def analyze_playlist(
     
     try:
         # Get valid access token
-        access_token = await spotify_api.get_valid_spotify_token(user_id, db)
+        access_token = await spotify_api.get_valid_spotify_token(user_id)
         
         # Get playlist info
         playlist_info = await spotify_api.get_playlist_info(access_token, playlist_id)
@@ -61,11 +58,7 @@ async def analyze_playlist(
         
         # Save analysis
         analysis = await crud_analysis.create_playlist_analysis(
-            db,
-            user_id,
-            playlist_id,
-            playlist_name,
-            mood_results,
+            user_id, playlist_id, playlist_name, mood_results
         )
         
         return analysis
@@ -84,13 +77,14 @@ async def analyze_playlist(
 @router.get("/history", response_model=schemas_analysis.AnalysisHistoryResponse)
 async def get_analysis_history(
     current_user: dict = Depends(get_current_user),
-    db: AsyncSession = Depends(get_db),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0),
 ):
     """Get user's analysis history."""
     user_id = UUID(current_user["id"])
-    analyses = await crud_analysis.get_user_analyses(db, user_id, limit=limit, offset=offset)
+    analyses = await crud_analysis.get_user_analyses(
+        user_id, limit=limit, offset=offset
+    )
     
     return schemas_analysis.AnalysisHistoryResponse(
         analyses=analyses,
@@ -102,11 +96,10 @@ async def get_analysis_history(
 async def get_analysis(
     analysis_id: UUID,
     current_user: dict = Depends(get_current_user),
-    db: AsyncSession = Depends(get_db),
 ):
     """Get a specific analysis by ID."""
     user_id = UUID(current_user["id"])
-    analysis = await crud_analysis.get_playlist_analysis(db, analysis_id)
+    analysis = await crud_analysis.get_playlist_analysis(analysis_id)
     
     if not analysis:
         raise HTTPException(
