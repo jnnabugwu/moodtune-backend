@@ -136,6 +136,10 @@ async def get_spotify_profile(
     try:
         access_token = await spotify_api.get_valid_spotify_token(user_id)
         profile_data = await spotify_api.get_user_profile(access_token)
+        
+        # Fetch playlists to get count
+        playlists_data = await spotify_api.get_user_playlists(access_token, limit=1, offset=0)
+        playlists_count = playlists_data.get("total", 0)
 
         images = profile_data.get("images") or []
         image_url = images[0]["url"] if images else None
@@ -148,6 +152,7 @@ async def get_spotify_profile(
                 email=profile_data.get("email"),
                 image_url=image_url,
                 followers=followers,
+                playlists_count=playlists_count,
                 product=profile_data.get("product"),
             )
         )
@@ -210,6 +215,7 @@ async def get_playlists(
                     description=item.get("description"),
                     tracks_count=item.get("tracks", {}).get("total"),
                     image_url=image_url,
+                    owner_display_name=(item.get("owner") or {}).get("display_name"),
                 )
             )
         
