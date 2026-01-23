@@ -63,6 +63,12 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
 
+    # Sentry
+    SENTRY_DSN_BACKEND: Optional[str] = None
+    SENTRY_ENVIRONMENT: str = "development"
+    SENTRY_TRACES_SAMPLE_RATE: float = 1.0
+    SENTRY_ENABLE: bool = True
+
     model_config = SettingsConfigDict(
         case_sensitive=True,
         env_file=_select_env_file()

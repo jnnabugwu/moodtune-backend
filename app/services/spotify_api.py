@@ -191,3 +191,23 @@ async def get_audio_features(access_token: str, track_ids: List[str]) -> Dict:
         response.raise_for_status()
         return response.json()
 
+
+async def get_track_info(access_token: str, track_id: str) -> Dict:
+    """
+    Get single track info including preview_url.
+    
+    Args:
+        access_token: Valid Spotify access token
+        track_id: Spotify track ID
+        
+    Returns:
+        dict: Spotify API response with track info
+    """
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"https://api.spotify.com/v1/tracks/{track_id}",
+            headers={"Authorization": f"Bearer {access_token}"},
+        )
+        response.raise_for_status()
+        return response.json()
+
