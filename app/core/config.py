@@ -59,6 +59,18 @@ class Settings(BaseSettings):
     # Optional deep link / frontend URL to redirect after callback
     SPOTIFY_APP_REDIRECT_URI: Optional[str] = None
     
+    # Audio upload settings
+    MAX_UPLOAD_SIZE_MB: int = 15
+    ALLOWED_AUDIO_FORMATS: List[str] = [
+        "mp3",
+        "m4a",
+        "flac",
+        "wav",
+        "ogg",
+    ]
+    AUDIO_ANALYSIS_TIMEOUT: int = 30
+    TEMP_AUDIO_DIR: str = "/tmp/moodtune-audio"
+    
     # Environment
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
