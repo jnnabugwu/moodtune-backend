@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+import os
+from fastapi import APIRouter, Depends, File, Form, HTTPException, status, UploadFile
 from uuid import UUID
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import httpx
 import sentry_sdk
 from app.api.deps import get_current_user
+from app.core.config import settings
 from app.schemas import song_analysis as schemas_song
 from app.services import spotify_api
 from app.services.audio_analysis_service import audio_analysis_service
@@ -93,53 +95,59 @@ async def get_playlist_tracks(
 
 @router.post("/analyze", response_model=schemas_song.SongAnalysisResponse)
 async def analyze_song(
-    request: schemas_song.SongAnalysisRequest,
     current_user: dict = Depends(get_current_user),
+    audio_file: UploadFile = File(...),
+    track_name: Optional[str] = Form(default=None),
+    artist_name: Optional[str] = Form(default=None),
+    track_id: Optional[str] = Form(default=None),
 ):
     """
-    Analyze a single song's mood from its Spotify preview URL.
-    
-    Downloads the 30-second preview, analyzes with librosa,
-    and returns mood classification and audio features.
+    Analyze a single song's mood from uploaded/downloaded audio.
+    Uses librosa on the audio file and returns mood classification and audio features.
     """
-    if not request.preview_url:
+    if not audio_file.filename:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Preview URL is required",
+            detail="Audio file is required",
         )
+    ext = os.path.splitext(audio_file.filename)[1].lstrip(".").lower()
+    if ext not in settings.ALLOWED_AUDIO_FORMATS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported audio format: {ext}",
+        )
+    file_data = await audio_file.read()
+    max_bytes = settings.MAX_UPLOAD_SIZE_MB * 1024 * 1024
+    if len(file_data) > max_bytes:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"File exceeds max size of {settings.MAX_UPLOAD_SIZE_MB} MB",
+        )
+
+    name = track_name or audio_file.filename or "Unknown Track"
+    artist = artist_name or "Unknown Artist"
 
     sentry_sdk.set_context(
         "song_request",
-        {
-            "track_id": request.track_id,
-            "track_name": request.track_name,
-            "artist_name": request.artist_name,
-        },
+        {"track_id": track_id, "track_name": name, "artist_name": artist},
     )
     sentry_sdk.add_breadcrumb(
         category="analysis",
-        message=f"Analyze song request: {request.track_name} - {request.artist_name}",
+        message=f"Analyze song request: {name} - {artist}",
         level="info",
     )
 
-    # Download preview
-    audio_file = await audio_analysis_service.download_preview(request.preview_url)
-
-    if not audio_file:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Failed to download audio preview",
-        )
-
     try:
-        # Analyze audio
-        features = audio_analysis_service.analyze_audio_file(audio_file)
+        features = audio_analysis_service.analyze_audio_bytes(
+            file_data=file_data,
+            filename=audio_file.filename,
+        )
         mood = audio_analysis_service.determine_mood(features)
 
         response = schemas_song.SongAnalysisResponse(
-            track_name=request.track_name,
-            artist_name=request.artist_name,
-            track_id=request.track_id,
+            track_name=name,
+            artist_name=artist,
+            track_id=track_id,
             mood=schemas_song.MoodResult(**mood),
             features=schemas_song.AudioFeatures(**features),
             success=True,
@@ -159,60 +167,77 @@ async def analyze_song(
             detail=f"Analysis failed: {str(e)}",
         )
 
-    finally:
-        # Always cleanup
-        audio_analysis_service.cleanup_temp_file(audio_file)
-
 
 @router.post("/analyze/{track_id}", response_model=schemas_song.SongAnalysisResponse)
 async def analyze_song_by_id(
     track_id: str,
     current_user: dict = Depends(get_current_user),
+    audio_file: UploadFile = File(...),
 ):
     """
-    Analyze a song by track ID.
-    Fetches track info (including preview URL) and analyzes it.
+    Analyze a song by track ID using your own audio file.
+    Fetches track metadata (name, artist) from Spotify; analysis is done with librosa on the uploaded file.
     """
+    if not audio_file.filename:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Audio file is required",
+        )
+    ext = os.path.splitext(audio_file.filename)[1].lstrip(".").lower()
+    if ext not in settings.ALLOWED_AUDIO_FORMATS:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Unsupported audio format: {ext}",
+        )
+    file_data = await audio_file.read()
+    max_bytes = settings.MAX_UPLOAD_SIZE_MB * 1024 * 1024
+    if len(file_data) > max_bytes:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail=f"File exceeds max size of {settings.MAX_UPLOAD_SIZE_MB} MB",
+        )
+
+    track_name = "Unknown Track"
+    artist_name = "Unknown Artist"
     user_id = UUID(current_user["id"])
+    try:
+        access_token = await spotify_api.get_valid_spotify_token(user_id)
+        track_info = await spotify_api.get_track_info(access_token, track_id)
+        track_name = track_info.get("name", track_name)
+        artists = track_info.get("artists", [])
+        artist_name = artists[0].get("name", artist_name) if artists else artist_name
+    except (ValueError, httpx.HTTPStatusError):
+        pass  # use defaults if Spotify metadata unavailable
+
+    sentry_sdk.set_context(
+        "song_request",
+        {"track_id": track_id, "track_name": track_name, "artist_name": artist_name},
+    )
+    sentry_sdk.add_breadcrumb(
+        category="analysis",
+        message=f"Analyze song by id: {track_id}",
+        level="info",
+    )
 
     try:
-        # Get valid access token
-        access_token = await spotify_api.get_valid_spotify_token(user_id)
+        features = audio_analysis_service.analyze_audio_bytes(
+            file_data=file_data,
+            filename=audio_file.filename,
+        )
+        mood = audio_analysis_service.determine_mood(features)
 
-        # Get track info
-        track_info = await spotify_api.get_track_info(access_token, track_id)
-
-        # Extract track details
-        track_name = track_info.get("name", "Unknown Track")
-        artists = track_info.get("artists", [])
-        artist_name = artists[0].get("name", "Unknown Artist") if artists else "Unknown Artist"
-        preview_url = track_info.get("preview_url")
-
-        if not preview_url:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="This track does not have a preview available",
-            )
-
-        # Create request and analyze
-        request = schemas_song.SongAnalysisRequest(
-            preview_url=preview_url,
+        return schemas_song.SongAnalysisResponse(
             track_name=track_name,
             artist_name=artist_name,
             track_id=track_id,
-        )
-
-        return await analyze_song(request, current_user)
-
-    except HTTPException:
-        raise
-    except ValueError as e:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=str(e),
+            mood=schemas_song.MoodResult(**mood),
+            features=schemas_song.AudioFeatures(**features),
+            success=True,
+            message=f"Analysis complete: {mood['primary_mood']} mood detected",
         )
     except Exception as e:
+        sentry_sdk.capture_exception(e)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to analyze song: {str(e)}",
+            detail=f"Analysis failed: {str(e)}",
         )

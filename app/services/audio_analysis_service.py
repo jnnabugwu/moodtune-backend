@@ -1,6 +1,5 @@
 import librosa
 import numpy as np
-import httpx
 import tempfile
 import os
 from typing import Dict, Optional
@@ -14,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 class AudioAnalysisService:
     """
-    Analyzes a single song's mood from audio.
-    Uses librosa to extract features from Spotify's 30-second preview.
+    Analyzes a single song's mood from audio using librosa.
+    Supports audio from uploaded/downloaded files (no Spotify preview URLs).
     """
 
     def __init__(self):
@@ -28,38 +27,17 @@ class AudioAnalysisService:
             'angry': {'valence': 0.3, 'energy': 0.9},
         }
 
-    async def download_preview(self, preview_url: str) -> Optional[str]:
-        """Download 30-second preview from Spotify"""
-        if not preview_url:
-            return None
-
+    def analyze_audio_bytes(self, file_data: bytes, filename: str) -> Dict:
+        """
+        Analyze audio from uploaded/downloaded file bytes (librosa).
+        Writes to temp file, runs analyze_audio_file, then cleans up.
+        Returns same feature dict as analyze_audio_file (tempo, energy, valence, etc.).
+        """
+        temp_path = self._write_temp_file(file_data, filename)
         try:
-            sentry_sdk.add_breadcrumb(
-                category="download",
-                message=f"Downloading preview: {preview_url[:50]}...",
-                level="info",
-            )
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                response = await client.get(preview_url)
-                response.raise_for_status()
-
-                # Save to temp file
-                temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.mp3')
-                temp_file.write(response.content)
-                temp_file.close()
-
-                logger.info(f"Downloaded preview: {preview_url[:50]}...")
-                sentry_sdk.add_breadcrumb(
-                    category="download",
-                    message="Preview download completed",
-                    level="info",
-                )
-                return temp_file.name
-
-        except Exception as e:
-            logger.error(f"Download failed: {e}")
-            sentry_sdk.capture_exception(e)
-            return None
+            return self.analyze_audio_file(temp_path)
+        finally:
+            self.cleanup_temp_file(temp_path)
 
     def analyze_audio_file(self, audio_path: str) -> Dict:
         """

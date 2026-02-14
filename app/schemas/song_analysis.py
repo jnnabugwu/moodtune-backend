@@ -19,10 +19,9 @@ class PlaylistTracksResponse(BaseModel):
 
 
 class SongAnalysisRequest(BaseModel):
-    """Request to analyze a single song."""
-    preview_url: str
-    track_name: str
-    artist_name: str
+    """Metadata for song analysis (audio is provided via file upload)."""
+    track_name: Optional[str] = None
+    artist_name: Optional[str] = None
     track_id: Optional[str] = None
 
 
