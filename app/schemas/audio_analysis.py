@@ -32,6 +32,11 @@ class AudioFeatures(BaseModel):
     mfcc_mean: List[float] = Field(description="Timbre characteristics")
     duration_seconds: float
 
+    # Human-readable labels for UI display
+    energy_label: str = Field(description='e.g. "High (0.84)"')
+    brightness_label: str = Field(description='e.g. "Bright"')
+    texture_label: str = Field(description='e.g. "Smooth"')
+
 
 class MoodFromAudio(BaseModel):
     """Mood inferred from audio features."""
@@ -41,6 +46,9 @@ class MoodFromAudio(BaseModel):
     confidence: float = Field(ge=0.0, le=1.0)
     reasoning: str = Field(description="Why this mood was chosen")
     audio_features: AudioFeatures
+    descriptors: List[str] = Field(
+        description='Short mood tags, e.g. ["upbeat", "danceable", "bright"]'
+    )
 
 
 class AudioAnalysisResponse(BaseModel):
