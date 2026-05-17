@@ -60,6 +60,7 @@ class AudioAnalysisService:
                 with start_span(op="audio.tempo", description="Extract tempo"):
                     # 1. Tempo (BPM)
                     tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
+                    tempo = float(np.squeeze(tempo))
 
                 with start_span(op="audio.features", description="Extract audio features"):
                     # 2. Energy (loudness)
@@ -172,6 +173,9 @@ class AudioAnalysisService:
     ) -> Dict:
         """Extract mood-relevant features for uploaded audio."""
         tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
+        # librosa >= 0.10.2 / numpy >= 2.0: beat_track returns tempo as a
+        # 1-D array — squeeze to scalar so float() doesn't throw.
+        tempo = float(np.squeeze(tempo))
         onset_env = librosa.onset.onset_strength(y=y, sr=sr)
         beat_strength = float(np.mean(onset_env) / (np.max(onset_env) + 1e-9))
 
@@ -193,18 +197,25 @@ class AudioAnalysisService:
         mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=3)
         mfcc_mean = np.mean(mfcc, axis=1).tolist()
 
+        sc_mean = float(np.mean(spectral_centroid))
+        rms_val = round(rms_energy, 4)
+
         return {
             "tempo": round(float(tempo), 2),
             "beat_strength": round(beat_strength, 3),
-            "spectral_centroid": round(float(np.mean(spectral_centroid)), 2),
+            "spectral_centroid": round(sc_mean, 2),
             "spectral_rolloff": round(float(np.mean(spectral_rolloff)), 2),
             "spectral_bandwidth": round(float(np.mean(spectral_bandwidth)), 2),
             "harmonic_ratio": round(harmonic_ratio, 3),
             "zero_crossing_rate": round(zero_crossing_rate, 4),
-            "rms_energy": round(rms_energy, 4),
+            "rms_energy": rms_val,
             "dynamic_range": round(dynamic_range, 4),
             "mfcc_mean": [round(float(v), 4) for v in mfcc_mean],
             "duration_seconds": round(duration_seconds, 2),
+            # Human-readable labels
+            "energy_label": self._energy_label(rms_val),
+            "brightness_label": self._brightness_label(sc_mean),
+            "texture_label": self._texture_label(harmonic_ratio),
         }
 
     def _default_upload_features(self) -> Dict:
@@ -300,7 +311,64 @@ class AudioAnalysisService:
                 "brightness": round(float(brightness), 2),
             },
             "reasoning": "Derived from tempo, brightness, and energy patterns.",
+            "descriptors": self._mood_descriptors(
+                mood["primary_mood"], features
+            ),
         }
+
+    # ------------------------------------------------------------------ #
+    #  Human-readable label helpers                                       #
+    # ------------------------------------------------------------------ #
+
+    def _energy_label(self, rms_energy: float) -> str:
+        """Return a display-ready energy label with raw value."""
+        if rms_energy > 0.15:
+            level = "High"
+        elif rms_energy > 0.05:
+            level = "Medium"
+        else:
+            level = "Low"
+        return f"{level} ({rms_energy:.2f})"
+
+    def _brightness_label(self, spectral_centroid: float) -> str:
+        """Return a display-ready brightness label."""
+        if spectral_centroid > 3000:
+            return "Bright"
+        elif spectral_centroid > 1500:
+            return "Warm"
+        return "Dark"
+
+    def _texture_label(self, harmonic_ratio: float) -> str:
+        """Return a display-ready texture label."""
+        if harmonic_ratio > 0.6:
+            return "Smooth"
+        elif harmonic_ratio > 0.3:
+            return "Textured"
+        return "Rough"
+
+    def _mood_descriptors(self, primary_mood: str, features: Dict) -> list:
+        """Return up to 3 short mood tags based on primary mood + features."""
+        base: dict[str, list] = {
+            "happy":     ["upbeat", "bright", "lively"],
+            "sad":       ["melancholic", "soft", "reflective"],
+            "energetic": ["driving", "intense", "powerful"],
+            "calm":      ["relaxed", "gentle", "serene"],
+            "angry":     ["aggressive", "raw", "intense"],
+        }
+        tags = list(base.get(primary_mood, ["expressive", "dynamic", "textured"]))
+
+        # Swap in a feature-specific tag when relevant
+        tempo = features.get("tempo", 120.0)
+        harmonic_ratio = features.get("harmonic_ratio", 0.5)
+
+        if tempo > 140 and "driving" not in tags:
+            tags[2] = "fast-paced"
+        if harmonic_ratio > 0.7 and "smooth" not in tags:
+            tags[2] = "smooth"
+
+        return tags[:3]
+
+    # ------------------------------------------------------------------ #
 
     def _distance_to_mood(self, mood: str, valence: float, energy: float) -> float:
         """Calculate distance to mood center"""

@@ -63,6 +63,7 @@ async def analyze_uploaded_audio(
         confidence=mood_summary["confidence"],
         reasoning=mood_summary["reasoning"],
         audio_features=audio_features,
+        descriptors=mood_summary.get("descriptors", []),
     )
 
     return AudioAnalysisResponse(

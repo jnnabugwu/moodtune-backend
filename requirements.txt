@@ -8,9 +8,9 @@ python-dotenv==1.0.0
 setuptools==80.9.0
 pytest==7.4.3
 pytest-asyncio==0.21.1
-librosa==0.10.1
+librosa>=0.10.2
 soundfile==0.12.1
-numpy==1.26.4
-scipy==1.11.4
-sentry-sdk[fastapi]==1.40.0
+numpy>=2.0
+scipy>=1.14
+sentry-sdk[fastapi]>=2.0
 python-multipart==0.0.9
