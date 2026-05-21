@@ -68,6 +68,7 @@ class AudioAnalysisResponse(BaseModel):
     analysis_method: str = "direct_audio"
     processed_at: datetime = Field(default_factory=datetime.utcnow)
     processing_time_seconds: float
+    jamendo_track_url: Optional[str] = None
 
     class Config:
         from_attributes = True
