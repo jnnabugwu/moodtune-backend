@@ -113,7 +113,10 @@ class AudioAnalysisService:
                     temp_path = self._write_temp_file(file_data, filename)
 
                 with start_span(op="audio.load", description="Load uploaded audio"):
-                    y, sr = librosa.load(temp_path, sr=22050, mono=True)
+                    # Cap at 5 minutes — librosa only reads up to `duration`
+                    # seconds regardless of file length, keeping memory and
+                    # processing time predictable for long tracks.
+                    y, sr = librosa.load(temp_path, sr=22050, mono=True, duration=300)
                     if sr is None or sr == 0 or y is None or len(y) == 0:
                         raise ValueError("Failed to decode audio data")
                     duration_seconds = float(len(y) / sr)
@@ -124,6 +127,7 @@ class AudioAnalysisService:
                             "duration_seconds": duration_seconds,
                             "filename": filename,
                             "bytes": len(file_data),
+                            "capped_at_seconds": 300,
                         },
                     )
 
