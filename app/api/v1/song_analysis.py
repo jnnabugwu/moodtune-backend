@@ -6,6 +6,7 @@ import httpx
 import sentry_sdk
 from app.api.deps import get_current_user
 from app.core.config import settings
+from app.crud import song_analysis as crud_song_analysis
 from app.schemas import song_analysis as schemas_song
 from app.services import spotify_api
 from app.services.audio_analysis_service import audio_analysis_service
@@ -35,6 +36,32 @@ def extract_track_from_item(item: Dict[str, Any]) -> Dict[str, Any]:
         "image_url": image_url,
         "duration_ms": track.get("duration_ms"),
     }
+
+
+@router.get("/history", response_model=schemas_song.SongAnalysisHistoryResponse)
+async def get_song_history(
+    current_user: dict = Depends(get_current_user),
+    limit: int = Query(50, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+):
+    """Get user's song analysis history."""
+    user_id = UUID(current_user["id"])
+    analyses = await crud_song_analysis.get_user_song_analyses(
+        user_id, limit=limit, offset=offset
+    )
+    items = [
+        schemas_song.SongAnalysisHistoryItem(
+            id=str(a["id"]),
+            user_id=str(a["user_id"]),
+            track_id=a.get("track_id"),
+            track_name=a["track_name"],
+            artist_name=a["artist_name"],
+            mood_results=a["mood_results"],
+            created_at=str(a["created_at"]),
+        )
+        for a in analyses
+    ]
+    return schemas_song.SongAnalysisHistoryResponse(analyses=items, total=len(items))
 
 
 @router.get("/playlist/{playlist_id}/tracks", response_model=schemas_song.PlaylistTracksResponse)
@@ -144,6 +171,14 @@ async def analyze_song(
         )
         mood = audio_analysis_service.determine_mood(features)
 
+        await crud_song_analysis.create_song_analysis(
+            user_id=UUID(current_user["id"]),
+            track_name=name,
+            artist_name=artist,
+            track_id=track_id,
+            mood_results={**mood, **{"features": features}},
+        )
+
         response = schemas_song.SongAnalysisResponse(
             track_name=name,
             artist_name=artist,
@@ -225,6 +260,14 @@ async def analyze_song_by_id(
             filename=audio_file.filename,
         )
         mood = audio_analysis_service.determine_mood(features)
+
+        await crud_song_analysis.create_song_analysis(
+            user_id=user_id,
+            track_name=track_name,
+            artist_name=artist_name,
+            track_id=track_id,
+            mood_results={**mood, **{"features": features}},
+        )
 
         return schemas_song.SongAnalysisResponse(
             track_name=track_name,

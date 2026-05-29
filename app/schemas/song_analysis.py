@@ -51,3 +51,20 @@ class SongAnalysisResponse(BaseModel):
     features: AudioFeatures
     success: bool
     message: str = ""
+
+
+class SongAnalysisHistoryItem(BaseModel):
+    """A single song analysis history row."""
+    id: str
+    user_id: str
+    track_id: Optional[str] = None
+    track_name: str
+    artist_name: str
+    mood_results: dict
+    created_at: str
+
+
+class SongAnalysisHistoryResponse(BaseModel):
+    """Response for song analysis history."""
+    analyses: list[SongAnalysisHistoryItem]
+    total: int
