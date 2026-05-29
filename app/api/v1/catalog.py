@@ -1,11 +1,14 @@
 import time
 import uuid
 from datetime import datetime, timezone
+from typing import Optional
 
 import httpx
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
+from app.api.deps import optional_get_current_user
 from app.core.config import settings
+from app.crud import song_analysis as crud_song_analysis
 from app.schemas.audio_analysis import AudioAnalysisResponse, AudioFeatures, MoodFromAudio
 from app.schemas.catalog_analysis import CatalogAnalyzeRequest
 from app.services.audio_analysis_service import audio_analysis_service
@@ -14,7 +17,10 @@ router = APIRouter()
 
 
 @router.post("/analyze", response_model=AudioAnalysisResponse)
-async def analyze_catalog_track(body: CatalogAnalyzeRequest):
+async def analyze_catalog_track(
+    body: CatalogAnalyzeRequest,
+    current_user: Optional[dict] = Depends(optional_get_current_user),
+):
     """
     Unauthenticated endpoint — downloads a Jamendo stream URL server-side
     and runs it through the same librosa pipeline as /audio-upload/analyze.
@@ -58,9 +64,26 @@ async def analyze_catalog_track(body: CatalogAnalyzeRequest):
         descriptors=mood_summary.get("descriptors", []),
     )
 
+    # Save to history for authenticated users
+    if current_user is not None:
+        await crud_song_analysis.create_song_analysis(
+            user_id=current_user["id"],
+            track_name=body.track_name,
+            artist_name=body.artist_name,
+            mood_results={
+                "primary_mood": mood.primary_mood,
+                "confidence": mood.confidence,
+                "mood_scores": mood.mood_scores,
+                "reasoning": mood.reasoning,
+                "descriptors": mood.descriptors,
+                "audio_features": mood.audio_features.model_dump(),
+            },
+            track_id=body.track_id or None,
+        )
+
     return AudioAnalysisResponse(
         id=uuid.uuid4(),
-        user_id=None,
+        user_id=current_user["id"] if current_user else None,
         filename=body.track_name,
         file_size_bytes=len(file_data),
         duration_seconds=audio_features.duration_seconds,

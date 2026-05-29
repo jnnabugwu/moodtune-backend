@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from supabase import Client
@@ -5,6 +7,7 @@ from app.core.supabase import get_supabase_client
 
 
 security = HTTPBearer()
+security_optional = HTTPBearer(auto_error=False)
 
 
 async def get_current_user(
@@ -42,3 +45,27 @@ async def get_current_user(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid authentication: {str(e)}"
         )
+
+
+async def optional_get_current_user(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_optional),
+) -> Optional[dict]:
+    """
+    Like get_current_user but returns None instead of 401-ing when
+    no token is present. Use for endpoints that support both guests
+    and authenticated users.
+    """
+    if credentials is None:
+        return None
+    try:
+        supabase: Client = get_supabase_client()
+        user_response = supabase.auth.get_user(credentials.credentials)
+        if not user_response.user:
+            return None
+        return {
+            "id": user_response.user.id,
+            "email": user_response.user.email,
+            "user_metadata": user_response.user.user_metadata,
+        }
+    except Exception:
+        return None  # silent fail — guest requests are fine
