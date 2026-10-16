@@ -112,6 +112,7 @@ def client(monkeypatch, calls):
         return {"id": "row-1"}
 
     async def fake_list(user_id, limit=50, offset=0):
+        calls["list_user_id"] = str(user_id)
         return calls.get("rows", [])
 
     async def fake_feedback(observation_ids, user_id):
@@ -193,6 +194,7 @@ def test_history_attaches_callers_feedback(client, calls):
     assert (items[0]["agrees"], items[0]["user_mood"]) == (False, "reflective")
     assert (items[1]["agrees"], items[1]["user_mood"]) == (None, None)
     assert items[2]["agrees"] is None
+    assert calls["list_user_id"] == USER["id"]
     assert calls["feedback"] == {"ids": [answered, unanswered], "user_id": USER["id"]}
 
 
@@ -204,6 +206,23 @@ def test_history_still_loads_when_feedback_fails(client, calls):
 
     assert resp.status_code == 200
     assert resp.json()["analyses"][0]["agrees"] is None
+
+
+def test_history_rejects_feedback_outside_the_four_buckets(client, calls):
+    """user_mood follows the feedback contract (UserMood), not any string."""
+    from app.schemas.song_analysis import SongAnalysisHistoryItem
+
+    row = _row()
+    with pytest.raises(ValidationError):
+        SongAnalysisHistoryItem(
+            id=row["id"],
+            user_id=row["user_id"],
+            track_name="Song",
+            artist_name="",
+            mood_results={},
+            created_at=row["created_at"],
+            user_mood="happy",
+        )
 
 
 def test_history_handles_legacy_rows_without_observation(client, calls):
@@ -288,6 +307,14 @@ def test_catalog_saves_history_by_default(catalog_client, calls):
 
     assert resp.status_code == 200
     assert calls["create"]["track_name"] == "Planet 21"
+
+
+def test_catalog_never_saves_history_for_guests(client, catalog_client, calls):
+    client.dependency_overrides[deps.optional_get_current_user] = lambda: None
+    resp = catalog_client.post("/api/v1/catalog/analyze", json=_catalog_body())
+
+    assert resp.status_code == 200
+    assert "create" not in calls
 
 
 def test_catalog_skips_history_when_app_saves_it(catalog_client, calls):
