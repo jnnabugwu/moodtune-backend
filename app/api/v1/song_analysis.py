@@ -1,3 +1,4 @@
+import logging
 import os
 from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, status, UploadFile
 from uuid import UUID
@@ -6,10 +7,14 @@ import httpx
 import sentry_sdk
 from app.api.deps import get_current_user
 from app.core.config import settings
+from app.crud import mood_observation as crud_mood_observation
 from app.crud import song_analysis as crud_song_analysis
 from app.schemas import song_analysis as schemas_song
+from app.schemas.result_history import ResultHistoryCreate, ResultHistoryCreated
 from app.services import spotify_api
 from app.services.audio_analysis_service import audio_analysis_service
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -49,19 +54,74 @@ async def get_song_history(
     analyses = await crud_song_analysis.get_user_song_analyses(
         user_id, limit=limit, offset=offset
     )
-    items = [
-        schemas_song.SongAnalysisHistoryItem(
-            id=str(a["id"]),
-            user_id=str(a["user_id"]),
-            track_id=a.get("track_id"),
-            track_name=a["track_name"],
-            artist_name=a["artist_name"],
-            mood_results=a["mood_results"],
-            created_at=str(a["created_at"]),
+    feedback = await _feedback_for(analyses, current_user["id"])
+    items = []
+    for a in analyses:
+        answer = feedback.get((a["mood_results"] or {}).get("observation_id"), {})
+        items.append(
+            schemas_song.SongAnalysisHistoryItem(
+                id=str(a["id"]),
+                user_id=str(a["user_id"]),
+                track_id=a.get("track_id"),
+                track_name=a["track_name"],
+                artist_name=a["artist_name"],
+                mood_results=a["mood_results"],
+                created_at=str(a["created_at"]),
+                agrees=answer.get("agrees"),
+                user_mood=answer.get("user_mood"),
+            )
         )
-        for a in analyses
-    ]
     return schemas_song.SongAnalysisHistoryResponse(analyses=items, total=len(items))
+
+
+async def _feedback_for(analyses: List[dict], user_id: str) -> Dict[str, dict]:
+    """Feedback keyed by observation id. History still loads if this fails."""
+    ids = [
+        oid
+        for a in analyses
+        if (oid := (a.get("mood_results") or {}).get("observation_id"))
+    ]
+    try:
+        return await crud_mood_observation.get_feedback(ids, user_id)
+    except Exception:
+        logger.exception("Could not load feedback for song history")
+        return {}
+
+
+@router.post(
+    "/history",
+    response_model=ResultHistoryCreated,
+    status_code=status.HTTP_201_CREATED,
+)
+async def save_result_to_history(
+    body: ResultHistoryCreate,
+    current_user: dict = Depends(get_current_user),
+):
+    """
+    Save a finished upload or catalog result to the caller's history, with
+    both the backend and on-device moods. The app sends the result only;
+    audio never reaches this endpoint.
+    """
+    try:
+        row = await crud_song_analysis.create_song_analysis(
+            user_id=UUID(current_user["id"]),
+            track_name=body.title,
+            artist_name=body.artist or "",
+            mood_results=body.to_mood_results(),
+            track_id=body.track_id,
+        )
+    except Exception:
+        logger.exception("Could not save result to history")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Could not save to history",
+        )
+    if row is None:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Could not save to history",
+        )
+    return ResultHistoryCreated(id=str(row["id"]))
 
 
 @router.get("/playlist/{playlist_id}/tracks", response_model=schemas_song.PlaylistTracksResponse)

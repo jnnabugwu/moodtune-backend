@@ -1,6 +1,6 @@
 import asyncio
 from datetime import datetime, timezone
-from typing import Optional
+from typing import Dict, List, Optional
 from uuid import UUID
 
 from supabase import Client
@@ -75,3 +75,30 @@ async def update_mood_feedback(
         return data[0] if data else None
 
     return await loop.run_in_executor(None, _update)
+
+
+async def get_feedback(observation_ids: List[str], user_id: str) -> Dict[str, dict]:
+    """
+    Feedback for the caller's own observations, keyed by observation id.
+
+    Scoped to user_id so a history row can't be used to read another user's
+    answer by pasting in their observation id.
+    """
+    if not observation_ids:
+        return {}
+    loop = asyncio.get_running_loop()
+
+    def _fetch():
+        resp = (
+            _client()
+            .table(_TABLE)
+            .select("id, agrees, user_mood")
+            .in_("id", observation_ids)
+            .eq("user_id", str(user_id))
+            .execute()
+        )
+        if getattr(resp, "error", None):
+            raise ValueError(resp.error.message)
+        return {row["id"]: row for row in resp.data or []}
+
+    return await loop.run_in_executor(None, _fetch)
