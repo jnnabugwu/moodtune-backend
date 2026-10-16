@@ -17,14 +17,18 @@ MAX_STRING_LENGTH = 100
 
 ObservationSource = Literal["upload", "catalog"]
 DisplayedSource = Literal["on_device", "backend"]
+# Classifier labels (determine_mood); the on-device model and the results
+# screen's displayed_mood use the same vocabulary. Mirrored by the CHECK
+# constraints in db/mood_observations.sql.
+Mood = Literal["happy", "energetic", "calm", "angry", "sad"]
+# The app's 4 display buckets, used only for the user's own feedback.
 UserMood = Literal["upbeat", "serene", "charged", "reflective"]
 
 ShortStr = Annotated[str, StringConstraints(max_length=MAX_STRING_LENGTH)]
-RequiredShortStr = Annotated[
+Tag = Annotated[
     str,
-    StringConstraints(strip_whitespace=True, min_length=1, max_length=MAX_STRING_LENGTH),
+    StringConstraints(strip_whitespace=True, min_length=1, max_length=MAX_TAG_LENGTH),
 ]
-Tag = Annotated[str, StringConstraints(max_length=MAX_TAG_LENGTH)]
 Probability = Annotated[float, Field(ge=0.0, le=1.0, allow_inf_nan=False)]
 
 
@@ -34,15 +38,15 @@ class MoodObservationCreate(BaseModel):
     id: UUID
     source: ObservationSource
     analysis_id: Optional[ShortStr] = None
-    backend_mood: RequiredShortStr
-    on_device_mood: Optional[ShortStr] = None
+    backend_mood: Mood
+    on_device_mood: Optional[Mood] = None
     on_device_tags: List[Tag] = Field(default_factory=list, max_length=MAX_TAGS)
-    on_device_probabilities: Optional[Dict[ShortStr, Probability]] = Field(
+    on_device_probabilities: Optional[Dict[Mood, Probability]] = Field(
         default=None, max_length=MAX_PROBABILITIES
     )
     on_device_latency_ms: Optional[int] = Field(default=None, ge=0, le=600_000)
     on_device_error: Optional[str] = Field(default=None, max_length=MAX_ERROR_LENGTH)
-    displayed_mood: RequiredShortStr
+    displayed_mood: Mood
     displayed_source: DisplayedSource
     platform: Optional[ShortStr] = None
     os_version: Optional[ShortStr] = None

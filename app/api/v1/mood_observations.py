@@ -1,3 +1,4 @@
+import logging
 from typing import Optional
 from uuid import UUID
 
@@ -11,6 +12,8 @@ from app.schemas.mood_observation import (
     MoodObservationCreate,
     MoodObservationCreated,
 )
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -34,10 +37,12 @@ async def record_mood_observation(
         await crud_mood_observation.upsert_mood_observation(
             body.to_row(), user_id=user_id
         )
-    except Exception as e:
+    except Exception:
+        # Public endpoint: keep storage/schema details out of the response.
+        logger.exception("Could not record mood observation %s", body.id)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Could not record mood observation: {str(e)}",
+            detail="Could not record mood observation",
         )
     return MoodObservationCreated(id=body.id)
 
@@ -49,10 +54,11 @@ async def record_mood_feedback(observation_id: UUID, body: MoodFeedbackUpdate):
         row = await crud_mood_observation.update_mood_feedback(
             observation_id, agrees=body.agrees, user_mood=body.user_mood
         )
-    except Exception as e:
+    except Exception:
+        logger.exception("Could not record feedback for %s", observation_id)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Could not record feedback: {str(e)}",
+            detail="Could not record feedback",
         )
     if row is None:
         raise HTTPException(

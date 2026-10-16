@@ -118,6 +118,13 @@ def test_schema_ignores_unknown_fields_like_titles():
         {"platform": "x" * 101},
         {"on_device_tags": [f"t{i}" for i in range(11)]},
         {"on_device_tags": ["x" * 41]},
+        {"on_device_tags": [""]},
+        {"on_device_tags": ["   "]},
+        # Moods must be classifier labels, not display buckets or other casing.
+        {"backend_mood": "serene"},
+        {"on_device_mood": "upbeat"},
+        {"displayed_mood": "Calm"},
+        {"on_device_probabilities": {"m0": 0.5}},
         {"on_device_probabilities": {f"m{i}": 0.1 for i in range(11)}},
         {"on_device_probabilities": {"happy": 1.5}},
         {"on_device_error": "e" * 501},
@@ -130,11 +137,26 @@ def test_schema_rejects_invalid(overrides):
         MoodObservationCreate(**_body(**overrides))
 
 
+@pytest.mark.parametrize("mood", ["happy", "energetic", "calm", "angry", "sad"])
+def test_schema_accepts_every_classifier_label(mood):
+    body = MoodObservationCreate(
+        **_body(backend_mood=mood, on_device_mood=mood, displayed_mood=mood)
+    )
+    assert body.backend_mood == body.on_device_mood == body.displayed_mood == mood
+
+
+def test_schema_trims_tags():
+    body = MoodObservationCreate(**_body(on_device_tags=["  vocals ", "piano"]))
+    assert body.on_device_tags == ["vocals", "piano"]
+
+
 def test_schema_accepts_limits():
     MoodObservationCreate(
         **_body(
             on_device_tags=["x" * 40] * 10,
-            on_device_probabilities={f"m{i}": 0.1 for i in range(10)},
+            on_device_probabilities={
+                m: 0.2 for m in ("happy", "energetic", "calm", "angry", "sad")
+            },
             on_device_error="e" * 500,
             device_model="x" * 100,
         )
@@ -193,6 +215,20 @@ def test_post_returns_500_when_storage_fails(client, monkeypatch):
     resp = client.post("/api/v1/mood-observations", json=_body())
 
     assert resp.status_code == 500
+    assert resp.json() == {"detail": "Could not record mood observation"}
+
+
+def test_patch_feedback_500_does_not_leak_storage_error(client, monkeypatch):
+    async def boom(observation_id, agrees, user_mood):
+        raise ValueError('column "agrees" of relation "mood_observations"')
+
+    monkeypatch.setattr(crud, "update_mood_feedback", boom)
+    resp = client.patch(
+        f"/api/v1/mood-observations/{uuid4()}/feedback", json={"agrees": True}
+    )
+
+    assert resp.status_code == 500
+    assert resp.json() == {"detail": "Could not record feedback"}
 
 
 # ---------------------------------------------------------------------------
@@ -304,6 +340,8 @@ class _FakeTable:
         return self
 
     def eq(self, field, value):
+        # Rows are keyed by id, so filtering on any other column is a bug.
+        assert field == "id", f"expected filter on id, got {field!r}"
         self._eq = (field, value)
         return self
 
