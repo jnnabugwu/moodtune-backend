@@ -70,6 +70,9 @@ class Settings(BaseSettings):
     ]
     AUDIO_ANALYSIS_TIMEOUT: int = 30
     TEMP_AUDIO_DIR: str = "/tmp/moodtune-audio"
+
+    # Remote kill switch for on-device (YAMNet) mood, served by GET /config
+    ON_DEVICE_MOOD_ENABLED: bool = True
     
     # Environment
     ENVIRONMENT: str = "development"
