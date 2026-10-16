@@ -1,0 +1,314 @@
+{
+  "version": 1,
+  "model": "yamnet.tflite (MediaPipe float32)",
+  "pooling": "peak",
+  "threshold": null,
+  "maxTags": 3,
+  "tags": [
+    {
+      "index": 24,
+      "class": "Singing",
+      "tag": "vocals"
+    },
+    {
+      "index": 31,
+      "class": "Rapping",
+      "tag": "vocals"
+    },
+    {
+      "index": 32,
+      "class": "Humming",
+      "tag": "vocals"
+    },
+    {
+      "index": 25,
+      "class": "Choir",
+      "tag": "vocals"
+    },
+    {
+      "index": 249,
+      "class": "Vocal music",
+      "tag": "vocals"
+    },
+    {
+      "index": 134,
+      "class": "Plucked string instrument",
+      "tag": "plucked strings"
+    },
+    {
+      "index": 135,
+      "class": "Guitar",
+      "tag": "guitar"
+    },
+    {
+      "index": 156,
+      "class": "Percussion",
+      "tag": "percussion"
+    },
+    {
+      "index": 147,
+      "class": "Keyboard (musical)",
+      "tag": "keys"
+    },
+    {
+      "index": 154,
+      "class": "Sampler",
+      "tag": "sampler"
+    },
+    {
+      "index": 157,
+      "class": "Drum kit",
+      "tag": "drums"
+    },
+    {
+      "index": 148,
+      "class": "Piano",
+      "tag": "piano"
+    },
+    {
+      "index": 153,
+      "class": "Synthesizer",
+      "tag": "synths"
+    },
+    {
+      "index": 138,
+      "class": "Acoustic guitar",
+      "tag": "acoustic guitar"
+    },
+    {
+      "index": 149,
+      "class": "Electric piano",
+      "tag": "electric piano"
+    },
+    {
+      "index": 159,
+      "class": "Drum",
+      "tag": "drums"
+    },
+    {
+      "index": 150,
+      "class": "Organ",
+      "tag": "organ"
+    },
+    {
+      "index": 139,
+      "class": "Steel guitar, slide guitar",
+      "tag": "slide guitar"
+    },
+    {
+      "index": 174,
+      "class": "Mallet percussion",
+      "tag": "mallet percussion"
+    },
+    {
+      "index": 184,
+      "class": "Bowed string instrument",
+      "tag": "strings"
+    },
+    {
+      "index": 136,
+      "class": "Electric guitar",
+      "tag": "electric guitar"
+    },
+    {
+      "index": 137,
+      "class": "Bass guitar",
+      "tag": "bass guitar"
+    },
+    {
+      "index": 161,
+      "class": "Rimshot",
+      "tag": "rimshot"
+    },
+    {
+      "index": 179,
+      "class": "Orchestra",
+      "tag": "orchestra"
+    },
+    {
+      "index": 190,
+      "class": "Wind instrument, woodwind instrument",
+      "tag": "woodwinds"
+    },
+    {
+      "index": 142,
+      "class": "Banjo",
+      "tag": "banjo"
+    },
+    {
+      "index": 158,
+      "class": "Drum machine",
+      "tag": "drum machine"
+    },
+    {
+      "index": 170,
+      "class": "Rattle (instrument)",
+      "tag": "rattle"
+    },
+    {
+      "index": 178,
+      "class": "Steelpan",
+      "tag": "steelpan"
+    },
+    {
+      "index": 186,
+      "class": "Violin, fiddle",
+      "tag": "violin"
+    },
+    {
+      "index": 192,
+      "class": "Saxophone",
+      "tag": "saxophone"
+    },
+    {
+      "index": 180,
+      "class": "Brass instrument",
+      "tag": "brass"
+    },
+    {
+      "index": 195,
+      "class": "Bell",
+      "tag": "bell"
+    },
+    {
+      "index": 171,
+      "class": "Maraca",
+      "tag": "maraca"
+    },
+    {
+      "index": 175,
+      "class": "Marimba, xylophone",
+      "tag": "marimba"
+    },
+    {
+      "index": 203,
+      "class": "Harmonica",
+      "tag": "harmonica"
+    },
+    {
+      "index": 144,
+      "class": "Mandolin",
+      "tag": "mandolin"
+    },
+    {
+      "index": 146,
+      "class": "Ukulele",
+      "tag": "ukulele"
+    },
+    {
+      "index": 168,
+      "class": "Wood block",
+      "tag": "wood block"
+    },
+    {
+      "index": 169,
+      "class": "Tambourine",
+      "tag": "tambourine"
+    },
+    {
+      "index": 176,
+      "class": "Glockenspiel",
+      "tag": "glockenspiel"
+    },
+    {
+      "index": 189,
+      "class": "Double bass",
+      "tag": "double bass"
+    },
+    {
+      "index": 191,
+      "class": "Flute",
+      "tag": "flute"
+    },
+    {
+      "index": 204,
+      "class": "Accordion",
+      "tag": "accordion"
+    },
+    {
+      "index": 141,
+      "class": "Strum",
+      "tag": "strum"
+    },
+    {
+      "index": 145,
+      "class": "Zither",
+      "tag": "zither"
+    },
+    {
+      "index": 152,
+      "class": "Hammond organ",
+      "tag": "organ"
+    },
+    {
+      "index": 155,
+      "class": "Harpsichord",
+      "tag": "harpsichord"
+    },
+    {
+      "index": 162,
+      "class": "Drum roll",
+      "tag": "drum roll"
+    },
+    {
+      "index": 165,
+      "class": "Tabla",
+      "tag": "tabla"
+    },
+    {
+      "index": 172,
+      "class": "Gong",
+      "tag": "gong"
+    },
+    {
+      "index": 182,
+      "class": "Trumpet",
+      "tag": "trumpet"
+    },
+    {
+      "index": 187,
+      "class": "Pizzicato",
+      "tag": "pizzicato"
+    },
+    {
+      "index": 188,
+      "class": "Cello",
+      "tag": "cello"
+    },
+    {
+      "index": 194,
+      "class": "Harp",
+      "tag": "harp"
+    },
+    {
+      "index": 200,
+      "class": "Chime",
+      "tag": "chime"
+    },
+    {
+      "index": 205,
+      "class": "Bagpipes",
+      "tag": "bagpipes"
+    },
+    {
+      "index": 209,
+      "class": "Singing bowl",
+      "tag": "singing bowl"
+    },
+    {
+      "index": 212,
+      "class": "Hip hop music",
+      "tag": "hip hop"
+    },
+    {
+      "index": 215,
+      "class": "Heavy metal",
+      "tag": "metal"
+    },
+    {
+      "index": 230,
+      "class": "Jazz",
+      "tag": "jazz"
+    }
+  ]
+}

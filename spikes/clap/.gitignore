@@ -1,0 +1,8 @@
+# Recreated by the commands in README.md
+.venv/
+__pycache__/
+data/tracks/
+models/
+results/yamnet_frame_scores.npz
+results_run.log
+swift_parity/decode

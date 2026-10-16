@@ -1,0 +1,1682 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sound Tag Sheet</title>
+<style>
+  :root { --bg: #fafaf9; --card: #fff; --fg: #1c1917; --dim: #78716c; --line: #e7e5e4; --accent: #4f46e5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0c0a09; --card: #1c1917; --fg: #f5f5f4; --dim: #a8a29e; --line: #292524; --accent: #a5b4fc; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 96px; }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  h2 { margin: 32px 0 12px; font-size: 18px; }
+  .dim { color: var(--dim); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+  .card.dropped { opacity: .45; }
+  .card header { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .card h3 { margin: 0; font-size: 16px; flex: 1; min-width: 160px; }
+  .card p { margin: 6px 0 8px; font-size: 13px; }
+  .name { font: inherit; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg); width: 180px; }
+  .keep { font-size: 13px; white-space: nowrap; }
+  ol { margin: 0; padding-left: 20px; }
+  li { margin: 8px 0; }
+  audio { width: 100%; max-width: 420px; height: 32px; }
+  .meta { font-size: 13px; }
+  a { color: var(--accent); }
+  .bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--line); padding: 10px 16px; display: flex; gap: 8px; justify-content: center; }
+  button { font: inherit; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sound tag wording</h1>
+  <p class="dim">Built from YAMNet scores on 200 Jamendo tracks. For each class: listen to the
+  examples (each player starts 2 s before the moment YAMNet heard it most), untick <em>keep</em> if it's wrong or not
+  worth saying, and edit the display name. Classes with the same display name merge into one tag.
+  Your choices save in this browser as you go; use <strong>Copy decisions</strong> when done.</p>
+  <h2>Vocals</h2>
+    <section class="card" data-class="Singing">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Singing</h3>
+        <input class="name" type="text" value="vocals" aria-label="Display name for Singing">
+      </header>
+      <p class="dim">A top-3 tag on <strong>57</strong> tracks;
+        scores ≥ 0.1 on 10 of them · typical score 0.06 ·
+        highest 0.15</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1321406.mp3#t=161.8"></audio>
+          <div class="meta"><strong>Horizons</strong> · Train Room
+            <span class="dim">· peaks at 2:43 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/1321406" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1413928.mp3#t=51.6"></audio>
+          <div class="meta"><strong>Runaway</strong> · Alyssa Riley
+            <span class="dim">· peaks at 0:53 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1413928" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1847811.mp3#t=47.6"></audio>
+          <div class="meta"><strong>Dogg Pound</strong> · J1S
+            <span class="dim">· peaks at 0:49 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1847811" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Rapping">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Rapping</h3>
+        <input class="name" type="text" value="vocals" aria-label="Display name for Rapping">
+      </header>
+      <p class="dim">A top-3 tag on <strong>20</strong> tracks;
+        scores ≥ 0.1 on 14 of them · typical score 0.15 ·
+        highest 0.41</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1847811.mp3#t=47.6"></audio>
+          <div class="meta"><strong>Dogg Pound</strong> · J1S
+            <span class="dim">· peaks at 0:49 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/1847811" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1863054.mp3#t=84.5"></audio>
+          <div class="meta"><strong>People on the TV</strong> · Mercury &amp;amp; The Architects
+            <span class="dim">· peaks at 1:26 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1863054" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1829207.mp3#t=46.0"></audio>
+          <div class="meta"><strong>IM NOT DEAD</strong> · Childsanonymous
+            <span class="dim">· peaks at 0:47 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1829207" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Humming">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Humming</h3>
+        <input class="name" type="text" value="vocals" aria-label="Display name for Humming">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.14 ·
+        highest 0.20</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/260842.mp3#t=120.0"></audio>
+          <div class="meta"><strong>Sofa</strong> · Dazie Mae
+            <span class="dim">· peaks at 2:01 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/260842" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/2083.mp3#t=156.2"></audio>
+          <div class="meta"><strong>TripToJazz</strong> · Manuzik
+            <span class="dim">· peaks at 2:38 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/2083" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1215804.mp3#t=95.2"></audio>
+          <div class="meta"><strong>Take it</strong> · Manhat10
+            <span class="dim">· peaks at 1:37 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1215804" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Choir">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Choir</h3>
+        <input class="name" type="text" value="vocals" aria-label="Display name for Choir">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.20 ·
+        highest 0.20</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/26742.mp3#t=62.7"></audio>
+          <div class="meta"><strong>Beauty</strong> · Tryad
+            <span class="dim">· peaks at 1:04 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/26742" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1321406.mp3#t=161.8"></audio>
+          <div class="meta"><strong>Horizons</strong> · Train Room
+            <span class="dim">· peaks at 2:43 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/1321406" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1125749.mp3#t=146.0"></audio>
+          <div class="meta"><strong>No Doctor</strong> · 14ice_music
+            <span class="dim">· peaks at 2:28 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/1125749" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Vocal music">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Vocal music</h3>
+        <input class="name" type="text" value="vocals" aria-label="Display name for Vocal music">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.15 ·
+        highest 0.15</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1086780.mp3#t=65.1"></audio>
+          <div class="meta"><strong>Nobody Is Here</strong> · 14ice_music
+            <span class="dim">· peaks at 1:07 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1086780" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/260842.mp3#t=120.5"></audio>
+          <div class="meta"><strong>Sofa</strong> · Dazie Mae
+            <span class="dim">· peaks at 2:02 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/260842" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/2083.mp3#t=156.2"></audio>
+          <div class="meta"><strong>TripToJazz</strong> · Manuzik
+            <span class="dim">· peaks at 2:38 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/2083" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section><h2>Instruments</h2>
+    <section class="card" data-class="Plucked string instrument">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Plucked string instrument</h3>
+        <input class="name" type="text" value="plucked strings" aria-label="Display name for Plucked string instrument">
+      </header>
+      <p class="dim">A top-3 tag on <strong>65</strong> tracks;
+        scores ≥ 0.1 on 33 of them · typical score 0.11 ·
+        highest 0.50</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/74476.mp3#t=184.4"></audio>
+          <div class="meta"><strong>Droit dans le mur (Canicule, licence art libre, boxson.net)</strong> · La Vérue
+            <span class="dim">· peaks at 3:06 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/74476" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1442030.mp3#t=132.4"></audio>
+          <div class="meta"><strong>Peyote</strong> · Kinematic
+            <span class="dim">· peaks at 2:14 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/1442030" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/938328.mp3#t=57.5"></audio>
+          <div class="meta"><strong>I&#x27;m Getting Better</strong> · Jonathan Dimmel
+            <span class="dim">· peaks at 0:59 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/938328" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Guitar">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Guitar</h3>
+        <input class="name" type="text" value="guitar" aria-label="Display name for Guitar">
+      </header>
+      <p class="dim">A top-3 tag on <strong>43</strong> tracks;
+        scores ≥ 0.1 on 25 of them · typical score 0.15 ·
+        highest 0.59</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1442030.mp3#t=135.8"></audio>
+          <div class="meta"><strong>Peyote</strong> · Kinematic
+            <span class="dim">· peaks at 2:17 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/1442030" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/74476.mp3#t=184.4"></audio>
+          <div class="meta"><strong>Droit dans le mur (Canicule, licence art libre, boxson.net)</strong> · La Vérue
+            <span class="dim">· peaks at 3:06 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/74476" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/938328.mp3#t=57.5"></audio>
+          <div class="meta"><strong>I&#x27;m Getting Better</strong> · Jonathan Dimmel
+            <span class="dim">· peaks at 0:59 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/938328" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Percussion">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Percussion</h3>
+        <input class="name" type="text" value="percussion" aria-label="Display name for Percussion">
+      </header>
+      <p class="dim">A top-3 tag on <strong>35</strong> tracks;
+        scores ≥ 0.1 on 17 of them · typical score 0.08 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1857303.mp3#t=65.7"></audio>
+          <div class="meta"><strong>Fire fighter</strong> · Stefan Kartenberg
+            <span class="dim">· peaks at 1:07 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/1857303" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1882761.mp3#t=133.6"></audio>
+          <div class="meta"><strong>No Rest Or Endless Rest</strong> · Lisofv
+            <span class="dim">· peaks at 2:15 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/1882761" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1230403.mp3#t=48.9"></audio>
+          <div class="meta"><strong>Possibilities</strong> · Jasmine Jordan
+            <span class="dim">· peaks at 0:50 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/1230403" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Keyboard (musical)">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Keyboard (musical)</h3>
+        <input class="name" type="text" value="keys" aria-label="Display name for Keyboard (musical)">
+      </header>
+      <p class="dim">A top-3 tag on <strong>33</strong> tracks;
+        scores ≥ 0.1 on 20 of them · typical score 0.26 ·
+        highest 0.59</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/196257.mp3#t=24.0"></audio>
+          <div class="meta"><strong>Prelude in C# minor</strong> · Maya Filipič
+            <span class="dim">· peaks at 0:25 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/196257" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/196223.mp3#t=42.4"></audio>
+          <div class="meta"><strong>Stories from Emona IV</strong> · Maya Filipič
+            <span class="dim">· peaks at 0:44 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/196223" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/196222.mp3#t=146.2"></audio>
+          <div class="meta"><strong>Stories from Emona III</strong> · Maya Filipič
+            <span class="dim">· peaks at 2:28 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/196222" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Sampler">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Sampler</h3>
+        <input class="name" type="text" value="sampler" aria-label="Display name for Sampler">
+      </header>
+      <p class="dim">A top-3 tag on <strong>28</strong> tracks;
+        scores ≥ 0.1 on 4 of them · typical score 0.02 ·
+        highest 0.26</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1701773.mp3#t=63.1"></audio>
+          <div class="meta"><strong>La Machine</strong> · hajaran
+            <span class="dim">· peaks at 1:05 · score 0.26 ·
+            <a href="https://www.jamendo.com/track/1701773" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/26743.mp3#t=243.0"></audio>
+          <div class="meta"><strong>Empty</strong> · Tryad
+            <span class="dim">· peaks at 4:04 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/26743" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1418676.mp3#t=174.1"></audio>
+          <div class="meta"><strong>Round The Twist</strong> · The Aluminium Tough
+            <span class="dim">· peaks at 2:56 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/1418676" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Drum kit">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Drum kit</h3>
+        <input class="name" type="text" value="drums" aria-label="Display name for Drum kit">
+      </header>
+      <p class="dim">A top-3 tag on <strong>20</strong> tracks;
+        scores ≥ 0.1 on 5 of them · typical score 0.06 ·
+        highest 0.41</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1882761.mp3#t=133.6"></audio>
+          <div class="meta"><strong>No Rest Or Endless Rest</strong> · Lisofv
+            <span class="dim">· peaks at 2:15 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/1882761" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1857303.mp3#t=65.7"></audio>
+          <div class="meta"><strong>Fire fighter</strong> · Stefan Kartenberg
+            <span class="dim">· peaks at 1:07 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/1857303" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/6581.mp3#t=55.7"></audio>
+          <div class="meta"><strong>Arcadia</strong> · Tryad
+            <span class="dim">· peaks at 0:57 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/6581" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Piano">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Piano</h3>
+        <input class="name" type="text" value="piano" aria-label="Display name for Piano">
+      </header>
+      <p class="dim">A top-3 tag on <strong>17</strong> tracks;
+        scores ≥ 0.1 on 15 of them · typical score 0.33 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/196257.mp3#t=24.0"></audio>
+          <div class="meta"><strong>Prelude in C# minor</strong> · Maya Filipič
+            <span class="dim">· peaks at 0:25 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/196257" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/196222.mp3#t=146.2"></audio>
+          <div class="meta"><strong>Stories from Emona III</strong> · Maya Filipič
+            <span class="dim">· peaks at 2:28 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/196222" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/196223.mp3#t=42.4"></audio>
+          <div class="meta"><strong>Stories from Emona IV</strong> · Maya Filipič
+            <span class="dim">· peaks at 0:44 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/196223" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Synthesizer">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Synthesizer</h3>
+        <input class="name" type="text" value="synths" aria-label="Display name for Synthesizer">
+      </header>
+      <p class="dim">A top-3 tag on <strong>17</strong> tracks;
+        scores ≥ 0.1 on 4 of them · typical score 0.04 ·
+        highest 0.50</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/33322.mp3#t=193.5"></audio>
+          <div class="meta"><strong>Go to Sleep in Silence</strong> · Traffic In My Head
+            <span class="dim">· peaks at 3:15 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/33322" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1701773.mp3#t=63.1"></audio>
+          <div class="meta"><strong>La Machine</strong> · hajaran
+            <span class="dim">· peaks at 1:05 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/1701773" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/15655.mp3#t=312.8"></audio>
+          <div class="meta"><strong>Invisible Walls</strong> · Revolution Void
+            <span class="dim">· peaks at 5:14 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/15655" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Acoustic guitar">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Acoustic guitar</h3>
+        <input class="name" type="text" value="acoustic guitar" aria-label="Display name for Acoustic guitar">
+      </header>
+      <p class="dim">A top-3 tag on <strong>14</strong> tracks;
+        scores ≥ 0.1 on 10 of them · typical score 0.15 ·
+        highest 0.50</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1022211.mp3#t=65.9"></audio>
+          <div class="meta"><strong>All You Know</strong> · Quietly Concerned
+            <span class="dim">· peaks at 1:07 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/1022211" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/74476.mp3#t=189.2"></audio>
+          <div class="meta"><strong>Droit dans le mur (Canicule, licence art libre, boxson.net)</strong> · La Vérue
+            <span class="dim">· peaks at 3:11 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/74476" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1321406.mp3#t=107.3"></audio>
+          <div class="meta"><strong>Horizons</strong> · Train Room
+            <span class="dim">· peaks at 1:49 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/1321406" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Electric piano">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Electric piano</h3>
+        <input class="name" type="text" value="electric piano" aria-label="Display name for Electric piano">
+      </header>
+      <p class="dim">A top-3 tag on <strong>14</strong> tracks;
+        scores ≥ 0.1 on 14 of them · typical score 0.30 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/196257.mp3#t=24.5"></audio>
+          <div class="meta"><strong>Prelude in C# minor</strong> · Maya Filipič
+            <span class="dim">· peaks at 0:26 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/196257" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/196222.mp3#t=49.5"></audio>
+          <div class="meta"><strong>Stories from Emona III</strong> · Maya Filipič
+            <span class="dim">· peaks at 0:51 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/196222" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/196223.mp3#t=42.4"></audio>
+          <div class="meta"><strong>Stories from Emona IV</strong> · Maya Filipič
+            <span class="dim">· peaks at 0:44 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/196223" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Drum">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Drum</h3>
+        <input class="name" type="text" value="drums" aria-label="Display name for Drum">
+      </header>
+      <p class="dim">A top-3 tag on <strong>14</strong> tracks;
+        scores ≥ 0.1 on 8 of them · typical score 0.21 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1857303.mp3#t=65.7"></audio>
+          <div class="meta"><strong>Fire fighter</strong> · Stefan Kartenberg
+            <span class="dim">· peaks at 1:07 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/1857303" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1882761.mp3#t=133.6"></audio>
+          <div class="meta"><strong>No Rest Or Endless Rest</strong> · Lisofv
+            <span class="dim">· peaks at 2:15 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/1882761" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1861816.mp3#t=120.2"></audio>
+          <div class="meta"><strong>Mr Carbon</strong> · Heifervescent
+            <span class="dim">· peaks at 2:02 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/1861816" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Organ">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Organ</h3>
+        <input class="name" type="text" value="organ" aria-label="Display name for Organ">
+      </header>
+      <p class="dim">A top-3 tag on <strong>11</strong> tracks;
+        scores ≥ 0.1 on 9 of them · typical score 0.20 ·
+        highest 0.59</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/161545.mp3#t=84.2"></audio>
+          <div class="meta"><strong>The Field</strong> · Reno Project
+            <span class="dim">· peaks at 1:26 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/161545" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/25707.mp3#t=58.1"></audio>
+          <div class="meta"><strong>Be Brave (feat. Norine Braun)</strong> · Antony Raijekov
+            <span class="dim">· peaks at 1:00 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/25707" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1119658.mp3#t=163.2"></audio>
+          <div class="meta"><strong>I&#x27;m So Glad</strong> · Robert Avellanet
+            <span class="dim">· peaks at 2:45 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/1119658" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Steel guitar, slide guitar">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Steel guitar, slide guitar</h3>
+        <input class="name" type="text" value="slide guitar" aria-label="Display name for Steel guitar, slide guitar">
+      </header>
+      <p class="dim">A top-3 tag on <strong>10</strong> tracks;
+        scores ≥ 0.1 on 5 of them · typical score 0.12 ·
+        highest 0.59</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/736472.mp3#t=133.0"></audio>
+          <div class="meta"><strong>Shines in Blue</strong> · Secret Babies
+            <span class="dim">· peaks at 2:15 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/736472" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/472893.mp3#t=121.1"></audio>
+          <div class="meta"><strong>Winter Sunlight (airtone feat. Leza2unes)</strong> · Snowflake &amp; ccMixter
+            <span class="dim">· peaks at 2:03 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/472893" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/887211.mp3#t=44.3"></audio>
+          <div class="meta"><strong>City</strong> · WE ARE FM
+            <span class="dim">· peaks at 0:46 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/887211" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Mallet percussion">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Mallet percussion</h3>
+        <input class="name" type="text" value="mallet percussion" aria-label="Display name for Mallet percussion">
+      </header>
+      <p class="dim">A top-3 tag on <strong>7</strong> tracks;
+        scores ≥ 0.1 on 4 of them · typical score 0.11 ·
+        highest 0.59</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1230403.mp3#t=48.9"></audio>
+          <div class="meta"><strong>Possibilities</strong> · Jasmine Jordan
+            <span class="dim">· peaks at 0:50 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/1230403" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/18232.mp3#t=80.7"></audio>
+          <div class="meta"><strong>Inside a Cocoon</strong> · Project Divinity
+            <span class="dim">· peaks at 1:22 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/18232" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/161545.mp3#t=89.0"></audio>
+          <div class="meta"><strong>The Field</strong> · Reno Project
+            <span class="dim">· peaks at 1:31 · score 0.26 ·
+            <a href="https://www.jamendo.com/track/161545" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Bowed string instrument">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Bowed string instrument</h3>
+        <input class="name" type="text" value="strings" aria-label="Display name for Bowed string instrument">
+      </header>
+      <p class="dim">A top-3 tag on <strong>7</strong> tracks;
+        scores ≥ 0.1 on 6 of them · typical score 0.15 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1413928.mp3#t=106.5"></audio>
+          <div class="meta"><strong>Runaway</strong> · Alyssa Riley
+            <span class="dim">· peaks at 1:48 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/1413928" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/296235.mp3#t=77.8"></audio>
+          <div class="meta"><strong>Flight</strong> · Pianochocolate
+            <span class="dim">· peaks at 1:19 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/296235" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/2083.mp3#t=152.8"></audio>
+          <div class="meta"><strong>TripToJazz</strong> · Manuzik
+            <span class="dim">· peaks at 2:34 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/2083" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Electric guitar">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Electric guitar</h3>
+        <input class="name" type="text" value="electric guitar" aria-label="Display name for Electric guitar">
+      </header>
+      <p class="dim">A top-3 tag on <strong>6</strong> tracks;
+        scores ≥ 0.1 on 5 of them · typical score 0.13 ·
+        highest 0.26</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1882706.mp3#t=148.4"></audio>
+          <div class="meta"><strong>Julius Marx - Vices</strong> · Julius Marx
+            <span class="dim">· peaks at 2:30 · score 0.26 ·
+            <a href="https://www.jamendo.com/track/1882706" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1258976.mp3#t=114.0"></audio>
+          <div class="meta"><strong>Liquid Blue</strong> · The.madpix.project
+            <span class="dim">· peaks at 1:56 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/1258976" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/46039.mp3#t=161.3"></audio>
+          <div class="meta"><strong>Unsound</strong> · Bronson Norris
+            <span class="dim">· peaks at 2:43 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/46039" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Bass guitar">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Bass guitar</h3>
+        <input class="name" type="text" value="bass guitar" aria-label="Display name for Bass guitar">
+      </header>
+      <p class="dim">A top-3 tag on <strong>6</strong> tracks;
+        scores ≥ 0.1 on 5 of them · typical score 0.22 ·
+        highest 0.80</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1442030.mp3#t=135.8"></audio>
+          <div class="meta"><strong>Peyote</strong> · Kinematic
+            <span class="dim">· peaks at 2:17 · score 0.80 ·
+            <a href="https://www.jamendo.com/track/1442030" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/74476.mp3#t=184.4"></audio>
+          <div class="meta"><strong>Droit dans le mur (Canicule, licence art libre, boxson.net)</strong> · La Vérue
+            <span class="dim">· peaks at 3:06 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/74476" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1121394.mp3#t=37.7"></audio>
+          <div class="meta"><strong>You&#x27;re Always With Me</strong> · Marco Margna
+            <span class="dim">· peaks at 0:39 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1121394" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Rimshot">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Rimshot</h3>
+        <input class="name" type="text" value="rimshot" aria-label="Display name for Rimshot">
+      </header>
+      <p class="dim">A top-3 tag on <strong>6</strong> tracks;
+        scores ≥ 0.1 on 4 of them · typical score 0.23 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/6581.mp3#t=53.3"></audio>
+          <div class="meta"><strong>Arcadia</strong> · Tryad
+            <span class="dim">· peaks at 0:55 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/6581" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1882761.mp3#t=133.6"></audio>
+          <div class="meta"><strong>No Rest Or Endless Rest</strong> · Lisofv
+            <span class="dim">· peaks at 2:15 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1882761" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1436621.mp3#t=67.4"></audio>
+          <div class="meta"><strong>Good Old Times</strong> · Alex Cohen
+            <span class="dim">· peaks at 1:09 · score 0.26 ·
+            <a href="https://www.jamendo.com/track/1436621" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Orchestra">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Orchestra</h3>
+        <input class="name" type="text" value="orchestra" aria-label="Display name for Orchestra">
+      </header>
+      <p class="dim">A top-3 tag on <strong>6</strong> tracks;
+        scores ≥ 0.1 on 3 of them · typical score 0.12 ·
+        highest 0.20</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/5346.mp3#t=147.0"></audio>
+          <div class="meta"><strong>Larmes</strong> · Silence
+            <span class="dim">· peaks at 2:28 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/5346" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/856142.mp3#t=126.8"></audio>
+          <div class="meta"><strong>Time To Forget</strong> · The Monster Brothers
+            <span class="dim">· peaks at 2:08 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/856142" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/26742.mp3#t=189.7"></audio>
+          <div class="meta"><strong>Beauty</strong> · Tryad
+            <span class="dim">· peaks at 3:11 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/26742" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Wind instrument, woodwind instrument">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Wind instrument, woodwind instrument</h3>
+        <input class="name" type="text" value="woodwinds" aria-label="Display name for Wind instrument, woodwind instrument">
+      </header>
+      <p class="dim">A top-3 tag on <strong>6</strong> tracks;
+        scores ≥ 0.1 on 6 of them · typical score 0.38 ·
+        highest 0.50</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1247308.mp3#t=149.4"></audio>
+          <div class="meta"><strong>To Be a Master P.</strong> · Boom Boom Beckett
+            <span class="dim">· peaks at 2:31 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/1247308" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1270604.mp3#t=171.6"></audio>
+          <div class="meta"><strong>Something You Said</strong> · Régis V. Gronoff
+            <span class="dim">· peaks at 2:53 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/1270604" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/15655.mp3#t=207.8"></audio>
+          <div class="meta"><strong>Invisible Walls</strong> · Revolution Void
+            <span class="dim">· peaks at 3:29 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/15655" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Banjo">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Banjo</h3>
+        <input class="name" type="text" value="banjo" aria-label="Display name for Banjo">
+      </header>
+      <p class="dim">A top-3 tag on <strong>5</strong> tracks;
+        scores ≥ 0.1 on 2 of them · typical score 0.08 ·
+        highest 0.15</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1093795.mp3#t=118.3"></audio>
+          <div class="meta"><strong>Reach the Stars</strong> · JekK
+            <span class="dim">· peaks at 2:00 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1093795" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1092425.mp3#t=207.0"></audio>
+          <div class="meta"><strong>April Showers</strong> · ProleteR
+            <span class="dim">· peaks at 3:29 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1092425" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1816226.mp3#t=139.2"></audio>
+          <div class="meta"><strong>Name</strong> · Townhouse Woods
+            <span class="dim">· peaks at 2:21 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1816226" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Drum machine">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Drum machine</h3>
+        <input class="name" type="text" value="drum machine" aria-label="Display name for Drum machine">
+      </header>
+      <p class="dim">A top-3 tag on <strong>5</strong> tracks;
+        scores ≥ 0.1 on 3 of them · typical score 0.11 ·
+        highest 0.15</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1701773.mp3#t=28.5"></audio>
+          <div class="meta"><strong>La Machine</strong> · hajaran
+            <span class="dim">· peaks at 0:30 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1701773" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/8305.mp3#t=247.5"></audio>
+          <div class="meta"><strong>Lounge Oud  Feat. Fawzi Chekili</strong> · Ben OThman
+            <span class="dim">· peaks at 4:09 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/8305" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/26743.mp3#t=243.0"></audio>
+          <div class="meta"><strong>Empty</strong> · Tryad
+            <span class="dim">· peaks at 4:04 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/26743" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Rattle (instrument)">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Rattle (instrument)</h3>
+        <input class="name" type="text" value="rattle" aria-label="Display name for Rattle (instrument)">
+      </header>
+      <p class="dim">A top-3 tag on <strong>5</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.06 ·
+        highest 0.11</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/660684.mp3#t=121.1"></audio>
+          <div class="meta"><strong>Soda Stereo</strong> · Kalvicio
+            <span class="dim">· peaks at 2:03 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/660684" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1586071.mp3#t=58.3"></audio>
+          <div class="meta"><strong>Chances</strong> · The Devil Music Co.
+            <span class="dim">· peaks at 1:00 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1586071" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1436621.mp3#t=109.0"></audio>
+          <div class="meta"><strong>Good Old Times</strong> · Alex Cohen
+            <span class="dim">· peaks at 1:50 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1436621" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Steelpan">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Steelpan</h3>
+        <input class="name" type="text" value="steelpan" aria-label="Display name for Steelpan">
+      </header>
+      <p class="dim">A top-3 tag on <strong>5</strong> tracks;
+        scores ≥ 0.1 on 4 of them · typical score 0.33 ·
+        highest 0.74</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1230403.mp3#t=48.9"></audio>
+          <div class="meta"><strong>Possibilities</strong> · Jasmine Jordan
+            <span class="dim">· peaks at 0:50 · score 0.74 ·
+            <a href="https://www.jamendo.com/track/1230403" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/161545.mp3#t=89.0"></audio>
+          <div class="meta"><strong>The Field</strong> · Reno Project
+            <span class="dim">· peaks at 1:31 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/161545" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1199532.mp3#t=77.5"></audio>
+          <div class="meta"><strong>Stefan The Poker Player</strong> · REC
+            <span class="dim">· peaks at 1:19 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1199532" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Violin, fiddle">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Violin, fiddle</h3>
+        <input class="name" type="text" value="violin" aria-label="Display name for Violin, fiddle">
+      </header>
+      <p class="dim">A top-3 tag on <strong>5</strong> tracks;
+        scores ≥ 0.1 on 3 of them · typical score 0.15 ·
+        highest 0.50</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/296235.mp3#t=77.8"></audio>
+          <div class="meta"><strong>Flight</strong> · Pianochocolate
+            <span class="dim">· peaks at 1:19 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/296235" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1093795.mp3#t=113.0"></audio>
+          <div class="meta"><strong>Reach the Stars</strong> · JekK
+            <span class="dim">· peaks at 1:55 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1093795" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/946.mp3#t=118.2"></audio>
+          <div class="meta"><strong>Emptiness</strong> · Alexander Blu
+            <span class="dim">· peaks at 2:00 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/946" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Saxophone">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Saxophone</h3>
+        <input class="name" type="text" value="saxophone" aria-label="Display name for Saxophone">
+      </header>
+      <p class="dim">A top-3 tag on <strong>5</strong> tracks;
+        scores ≥ 0.1 on 4 of them · typical score 0.59 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1247308.mp3#t=149.4"></audio>
+          <div class="meta"><strong>To Be a Master P.</strong> · Boom Boom Beckett
+            <span class="dim">· peaks at 2:31 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/1247308" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1270604.mp3#t=171.6"></audio>
+          <div class="meta"><strong>Something You Said</strong> · Régis V. Gronoff
+            <span class="dim">· peaks at 2:53 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/1270604" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/15655.mp3#t=207.8"></audio>
+          <div class="meta"><strong>Invisible Walls</strong> · Revolution Void
+            <span class="dim">· peaks at 3:29 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/15655" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Brass instrument">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Brass instrument</h3>
+        <input class="name" type="text" value="brass" aria-label="Display name for Brass instrument">
+      </header>
+      <p class="dim">A top-3 tag on <strong>4</strong> tracks;
+        scores ≥ 0.1 on 3 of them · typical score 0.20 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/161538.mp3#t=170.5"></audio>
+          <div class="meta"><strong>Constellation</strong> · Reno Project
+            <span class="dim">· peaks at 2:52 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/161538" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1247308.mp3#t=149.4"></audio>
+          <div class="meta"><strong>To Be a Master P.</strong> · Boom Boom Beckett
+            <span class="dim">· peaks at 2:31 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1247308" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/78307.mp3#t=111.5"></audio>
+          <div class="meta"><strong>Gravity</strong> · Josh Woodward
+            <span class="dim">· peaks at 1:53 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/78307" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Bell">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Bell</h3>
+        <input class="name" type="text" value="bell" aria-label="Display name for Bell">
+      </header>
+      <p class="dim">A top-3 tag on <strong>4</strong> tracks;
+        scores ≥ 0.1 on 0 of them · typical score 0.04 ·
+        highest 0.08</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1230671.mp3#t=59.2"></audio>
+          <div class="meta"><strong>Horse Tamer</strong> · Jon Maurer
+            <span class="dim">· peaks at 1:01 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1230671" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/18232.mp3#t=82.1"></audio>
+          <div class="meta"><strong>Inside a Cocoon</strong> · Project Divinity
+            <span class="dim">· peaks at 1:24 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/18232" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1826081.mp3#t=138.2"></audio>
+          <div class="meta"><strong>Wasting All My Time</strong> · LITTLE SUSPICIONS
+            <span class="dim">· peaks at 2:20 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1826081" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Maraca">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Maraca</h3>
+        <input class="name" type="text" value="maraca" aria-label="Display name for Maraca">
+      </header>
+      <p class="dim">A top-3 tag on <strong>3</strong> tracks;
+        scores ≥ 0.1 on 0 of them · typical score 0.06 ·
+        highest 0.08</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/660684.mp3#t=121.1"></audio>
+          <div class="meta"><strong>Soda Stereo</strong> · Kalvicio
+            <span class="dim">· peaks at 2:03 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/660684" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1586071.mp3#t=58.3"></audio>
+          <div class="meta"><strong>Chances</strong> · The Devil Music Co.
+            <span class="dim">· peaks at 1:00 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/1586071" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1436621.mp3#t=109.0"></audio>
+          <div class="meta"><strong>Good Old Times</strong> · Alex Cohen
+            <span class="dim">· peaks at 1:50 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/1436621" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Marimba, xylophone">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Marimba, xylophone</h3>
+        <input class="name" type="text" value="marimba" aria-label="Display name for Marimba, xylophone">
+      </header>
+      <p class="dim">A top-3 tag on <strong>3</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.04 ·
+        highest 0.50</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/18232.mp3#t=80.7"></audio>
+          <div class="meta"><strong>Inside a Cocoon</strong> · Project Divinity
+            <span class="dim">· peaks at 1:22 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/18232" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/744927.mp3#t=140.4"></audio>
+          <div class="meta"><strong>At the Begining of Love</strong> · Dazie Mae
+            <span class="dim">· peaks at 2:22 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/744927" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/15664.mp3#t=94.7"></audio>
+          <div class="meta"><strong>Headphonetic</strong> · Revolution Void
+            <span class="dim">· peaks at 1:36 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/15664" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Harmonica">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Harmonica</h3>
+        <input class="name" type="text" value="harmonica" aria-label="Display name for Harmonica">
+      </header>
+      <p class="dim">A top-3 tag on <strong>3</strong> tracks;
+        scores ≥ 0.1 on 2 of them · typical score 0.33 ·
+        highest 0.98</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1022211.mp3#t=201.5"></audio>
+          <div class="meta"><strong>All You Know</strong> · Quietly Concerned
+            <span class="dim">· peaks at 3:23 · score 0.98 ·
+            <a href="https://www.jamendo.com/track/1022211" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1230671.mp3#t=195.4"></audio>
+          <div class="meta"><strong>Horse Tamer</strong> · Jon Maurer
+            <span class="dim">· peaks at 3:17 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1230671" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/15655.mp3#t=313.7"></audio>
+          <div class="meta"><strong>Invisible Walls</strong> · Revolution Void
+            <span class="dim">· peaks at 5:15 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/15655" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Mandolin">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Mandolin</h3>
+        <input class="name" type="text" value="mandolin" aria-label="Display name for Mandolin">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.06 ·
+        highest 0.11</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1816226.mp3#t=139.2"></audio>
+          <div class="meta"><strong>Name</strong> · Townhouse Woods
+            <span class="dim">· peaks at 2:21 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/1816226" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1093795.mp3#t=116.8"></audio>
+          <div class="meta"><strong>Reach the Stars</strong> · JekK
+            <span class="dim">· peaks at 1:58 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/1093795" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/296235.mp3#t=71.1"></audio>
+          <div class="meta"><strong>Flight</strong> · Pianochocolate
+            <span class="dim">· peaks at 1:13 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/296235" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Ukulele">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Ukulele</h3>
+        <input class="name" type="text" value="ukulele" aria-label="Display name for Ukulele">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.06 ·
+        highest 0.11</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/897105.mp3#t=214.0"></audio>
+          <div class="meta"><strong>Adult Only &amp; SaReGaMa - Afterzone</strong> · SaReGaMa
+            <span class="dim">· peaks at 3:36 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/897105" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/744927.mp3#t=44.4"></audio>
+          <div class="meta"><strong>At the Begining of Love</strong> · Dazie Mae
+            <span class="dim">· peaks at 0:46 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/744927" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/296235.mp3#t=71.1"></audio>
+          <div class="meta"><strong>Flight</strong> · Pianochocolate
+            <span class="dim">· peaks at 1:13 · score 0.04 ·
+            <a href="https://www.jamendo.com/track/296235" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Wood block">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Wood block</h3>
+        <input class="name" type="text" value="wood block" aria-label="Display name for Wood block">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.08 ·
+        highest 0.11</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/489242.mp3#t=236.1"></audio>
+          <div class="meta"><strong>Restored Soul</strong> · Keffy Kay
+            <span class="dim">· peaks at 3:58 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/489242" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1439149.mp3#t=302.2"></audio>
+          <div class="meta"><strong>Endless Waves</strong> · Spaneo
+            <span class="dim">· peaks at 5:04 · score 0.04 ·
+            <a href="https://www.jamendo.com/track/1439149" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1876747.mp3#t=90.4"></audio>
+          <div class="meta"><strong>YO QUIERO BEBER - Pueto pa lo mio records Presenta - Marshall Aquicci ft AllGenius - (Musica urbana, latin, latin urban, bass)</strong> · PUETO PA LO MIO RECORDS
+            <span class="dim">· peaks at 1:32 · score 0.04 ·
+            <a href="https://www.jamendo.com/track/1876747" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Tambourine">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Tambourine</h3>
+        <input class="name" type="text" value="tambourine" aria-label="Display name for Tambourine">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.10 ·
+        highest 0.15</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1893850.mp3#t=22.4"></audio>
+          <div class="meta"><strong>Sport Rock (Impossible To Stop)</strong> · SunSmileMusic
+            <span class="dim">· peaks at 0:24 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1893850" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/443376.mp3#t=62.9"></audio>
+          <div class="meta"><strong>Our Universe</strong> · Professor Kliq
+            <span class="dim">· peaks at 1:04 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/443376" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/2169.mp3#t=301.3"></audio>
+          <div class="meta"><strong>The new day</strong> · Greg Baumont
+            <span class="dim">· peaks at 5:03 · score 0.04 ·
+            <a href="https://www.jamendo.com/track/2169" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Glockenspiel">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Glockenspiel</h3>
+        <input class="name" type="text" value="glockenspiel" aria-label="Display name for Glockenspiel">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 0 of them · typical score 0.06 ·
+        highest 0.08</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/18232.mp3#t=80.7"></audio>
+          <div class="meta"><strong>Inside a Cocoon</strong> · Project Divinity
+            <span class="dim">· peaks at 1:22 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/18232" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1790663.mp3#t=89.3"></audio>
+          <div class="meta"><strong>Hidden Hand</strong> · Tab
+            <span class="dim">· peaks at 1:31 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1790663" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/33322.mp3#t=61.1"></audio>
+          <div class="meta"><strong>Go to Sleep in Silence</strong> · Traffic In My Head
+            <span class="dim">· peaks at 1:03 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/33322" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Double bass">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Double bass</h3>
+        <input class="name" type="text" value="double bass" aria-label="Display name for Double bass">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 2 of them · typical score 0.50 ·
+        highest 0.59</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/2083.mp3#t=152.3"></audio>
+          <div class="meta"><strong>TripToJazz</strong> · Manuzik
+            <span class="dim">· peaks at 2:34 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/2083" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1247308.mp3#t=231.5"></audio>
+          <div class="meta"><strong>To Be a Master P.</strong> · Boom Boom Beckett
+            <span class="dim">· peaks at 3:53 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/1247308" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1413928.mp3#t=106.5"></audio>
+          <div class="meta"><strong>Runaway</strong> · Alyssa Riley
+            <span class="dim">· peaks at 1:48 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1413928" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Flute">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Flute</h3>
+        <input class="name" type="text" value="flute" aria-label="Display name for Flute">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.20 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1135054.mp3#t=83.8"></audio>
+          <div class="meta"><strong>The Journey</strong> · atw
+            <span class="dim">· peaks at 1:25 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1135054" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/179677.mp3#t=162.4"></audio>
+          <div class="meta"><strong>Balança</strong> · Fluxo
+            <span class="dim">· peaks at 2:44 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/179677" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/5795.mp3#t=186.1"></audio>
+          <div class="meta"><strong>Lost or Found</strong> · Rob Costlow
+            <span class="dim">· peaks at 3:08 · score 0.03 ·
+            <a href="https://www.jamendo.com/track/5795" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Accordion">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Accordion</h3>
+        <input class="name" type="text" value="accordion" aria-label="Display name for Accordion">
+      </header>
+      <p class="dim">A top-3 tag on <strong>2</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.38 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1092425.mp3#t=208.5"></audio>
+          <div class="meta"><strong>April Showers</strong> · ProleteR
+            <span class="dim">· peaks at 3:30 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/1092425" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1022211.mp3#t=202.9"></audio>
+          <div class="meta"><strong>All You Know</strong> · Quietly Concerned
+            <span class="dim">· peaks at 3:24 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1022211" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/296236.mp3#t=54.7"></audio>
+          <div class="meta"><strong>August</strong> · Pianochocolate
+            <span class="dim">· peaks at 0:56 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/296236" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Strum">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Strum</h3>
+        <input class="name" type="text" value="strum" aria-label="Display name for Strum">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 0 of them · typical score 0.08 ·
+        highest 0.08</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/74476.mp3#t=188.2"></audio>
+          <div class="meta"><strong>Droit dans le mur (Canicule, licence art libre, boxson.net)</strong> · La Vérue
+            <span class="dim">· peaks at 3:10 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/74476" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1829018.mp3#t=81.7"></audio>
+          <div class="meta"><strong>Illusion Of Freedom</strong> · 83Crutch
+            <span class="dim">· peaks at 1:23 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1829018" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1407840.mp3#t=147.1"></audio>
+          <div class="meta"><strong>Summer</strong> · Michael Ellis
+            <span class="dim">· peaks at 2:29 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1407840" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Zither">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Zither</h3>
+        <input class="name" type="text" value="zither" aria-label="Display name for Zither">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.11 ·
+        highest 0.11</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/291174.mp3#t=164.1"></audio>
+          <div class="meta"><strong>North Hollywood Skyline</strong> · Brady Harris
+            <span class="dim">· peaks at 2:46 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/291174" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1230671.mp3#t=188.2"></audio>
+          <div class="meta"><strong>Horse Tamer</strong> · Jon Maurer
+            <span class="dim">· peaks at 3:10 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1230671" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1816226.mp3#t=138.8"></audio>
+          <div class="meta"><strong>Name</strong> · Townhouse Woods
+            <span class="dim">· peaks at 2:20 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/1816226" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Hammond organ">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Hammond organ</h3>
+        <input class="name" type="text" value="organ" aria-label="Display name for Hammond organ">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.33 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/161545.mp3#t=84.2"></audio>
+          <div class="meta"><strong>The Field</strong> · Reno Project
+            <span class="dim">· peaks at 1:26 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/161545" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/25707.mp3#t=58.1"></audio>
+          <div class="meta"><strong>Be Brave (feat. Norine Braun)</strong> · Antony Raijekov
+            <span class="dim">· peaks at 1:00 · score 0.50 ·
+            <a href="https://www.jamendo.com/track/25707" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/2083.mp3#t=51.7"></audio>
+          <div class="meta"><strong>TripToJazz</strong> · Manuzik
+            <span class="dim">· peaks at 0:53 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/2083" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Harpsichord">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Harpsichord</h3>
+        <input class="name" type="text" value="harpsichord" aria-label="Display name for Harpsichord">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.15 ·
+        highest 0.15</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1157362.mp3#t=152.5"></audio>
+          <div class="meta"><strong>First</strong> · JekK
+            <span class="dim">· peaks at 2:34 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1157362" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1407840.mp3#t=145.7"></audio>
+          <div class="meta"><strong>Summer</strong> · Michael Ellis
+            <span class="dim">· peaks at 2:27 · score 0.04 ·
+            <a href="https://www.jamendo.com/track/1407840" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/5792.mp3#t=187.2"></audio>
+          <div class="meta"><strong>Twilight</strong> · Rob Costlow
+            <span class="dim">· peaks at 3:09 · score 0.03 ·
+            <a href="https://www.jamendo.com/track/5792" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Drum roll">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Drum roll</h3>
+        <input class="name" type="text" value="drum roll" aria-label="Display name for Drum roll">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.33 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1861816.mp3#t=120.2"></audio>
+          <div class="meta"><strong>Mr Carbon</strong> · Heifervescent
+            <span class="dim">· peaks at 2:02 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1861816" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1857303.mp3#t=65.7"></audio>
+          <div class="meta"><strong>Fire fighter</strong> · Stefan Kartenberg
+            <span class="dim">· peaks at 1:07 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/1857303" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/267796.mp3#t=40.3"></audio>
+          <div class="meta"><strong>Stay Tuned</strong> · SONIC MYSTERY
+            <span class="dim">· peaks at 0:42 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/267796" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Tabla">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Tabla</h3>
+        <input class="name" type="text" value="tabla" aria-label="Display name for Tabla">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.11 ·
+        highest 0.11</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1876747.mp3#t=90.4"></audio>
+          <div class="meta"><strong>YO QUIERO BEBER - Pueto pa lo mio records Presenta - Marshall Aquicci ft AllGenius - (Musica urbana, latin, latin urban, bass)</strong> · PUETO PA LO MIO RECORDS
+            <span class="dim">· peaks at 1:32 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/1876747" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/296235.mp3#t=75.4"></audio>
+          <div class="meta"><strong>Flight</strong> · Pianochocolate
+            <span class="dim">· peaks at 1:17 · score 0.02 ·
+            <a href="https://www.jamendo.com/track/296235" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/489242.mp3#t=238.9"></audio>
+          <div class="meta"><strong>Restored Soul</strong> · Keffy Kay
+            <span class="dim">· peaks at 4:00 · score 0.01 ·
+            <a href="https://www.jamendo.com/track/489242" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Gong">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Gong</h3>
+        <input class="name" type="text" value="gong" aria-label="Display name for Gong">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.74 ·
+        highest 0.74</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/18239.mp3#t=151.1"></audio>
+          <div class="meta"><strong>Cemetery</strong> · Project Divinity
+            <span class="dim">· peaks at 2:33 · score 0.74 ·
+            <a href="https://www.jamendo.com/track/18239" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1215804.mp3#t=92.3"></audio>
+          <div class="meta"><strong>Take it</strong> · Manhat10
+            <span class="dim">· peaks at 1:34 · score 0.03 ·
+            <a href="https://www.jamendo.com/track/1215804" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1882761.mp3#t=64.8"></audio>
+          <div class="meta"><strong>No Rest Or Endless Rest</strong> · Lisofv
+            <span class="dim">· peaks at 1:06 · score 0.03 ·
+            <a href="https://www.jamendo.com/track/1882761" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Trumpet">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Trumpet</h3>
+        <input class="name" type="text" value="trumpet" aria-label="Display name for Trumpet">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.20 ·
+        highest 0.20</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/161538.mp3#t=170.5"></audio>
+          <div class="meta"><strong>Constellation</strong> · Reno Project
+            <span class="dim">· peaks at 2:52 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/161538" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/856142.mp3#t=126.8"></audio>
+          <div class="meta"><strong>Time To Forget</strong> · The Monster Brothers
+            <span class="dim">· peaks at 2:08 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/856142" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/78307.mp3#t=111.5"></audio>
+          <div class="meta"><strong>Gravity</strong> · Josh Woodward
+            <span class="dim">· peaks at 1:53 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/78307" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Pizzicato">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Pizzicato</h3>
+        <input class="name" type="text" value="pizzicato" aria-label="Display name for Pizzicato">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 0 of them · typical score 0.06 ·
+        highest 0.06</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/2083.mp3#t=151.9"></audio>
+          <div class="meta"><strong>TripToJazz</strong> · Manuzik
+            <span class="dim">· peaks at 2:33 · score 0.26 ·
+            <a href="https://www.jamendo.com/track/2083" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1247308.mp3#t=228.1"></audio>
+          <div class="meta"><strong>To Be a Master P.</strong> · Boom Boom Beckett
+            <span class="dim">· peaks at 3:50 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/1247308" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/710586.mp3#t=254.6"></audio>
+          <div class="meta"><strong>Mind Expansion</strong> · Fortadelis
+            <span class="dim">· peaks at 4:16 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/710586" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Cello">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Cello</h3>
+        <input class="name" type="text" value="cello" aria-label="Display name for Cello">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.74 ·
+        highest 0.74</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1413928.mp3#t=106.5"></audio>
+          <div class="meta"><strong>Runaway</strong> · Alyssa Riley
+            <span class="dim">· peaks at 1:48 · score 0.74 ·
+            <a href="https://www.jamendo.com/track/1413928" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/2083.mp3#t=152.8"></audio>
+          <div class="meta"><strong>TripToJazz</strong> · Manuzik
+            <span class="dim">· peaks at 2:34 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/2083" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1247308.mp3#t=226.2"></audio>
+          <div class="meta"><strong>To Be a Master P.</strong> · Boom Boom Beckett
+            <span class="dim">· peaks at 3:48 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/1247308" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Harp">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Harp</h3>
+        <input class="name" type="text" value="harp" aria-label="Display name for Harp">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.33 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/710586.mp3#t=254.6"></audio>
+          <div class="meta"><strong>Mind Expansion</strong> · Fortadelis
+            <span class="dim">· peaks at 4:16 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/710586" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1247308.mp3#t=69.8"></audio>
+          <div class="meta"><strong>To Be a Master P.</strong> · Boom Boom Beckett
+            <span class="dim">· peaks at 1:11 · score 0.15 ·
+            <a href="https://www.jamendo.com/track/1247308" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1125749.mp3#t=46.9"></audio>
+          <div class="meta"><strong>No Doctor</strong> · 14ice_music
+            <span class="dim">· peaks at 0:48 · score 0.06 ·
+            <a href="https://www.jamendo.com/track/1125749" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Chime">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Chime</h3>
+        <input class="name" type="text" value="chime" aria-label="Display name for Chime">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 0 of them · typical score 0.08 ·
+        highest 0.08</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/18232.mp3#t=82.1"></audio>
+          <div class="meta"><strong>Inside a Cocoon</strong> · Project Divinity
+            <span class="dim">· peaks at 1:24 · score 0.26 ·
+            <a href="https://www.jamendo.com/track/18232" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1790663.mp3#t=89.3"></audio>
+          <div class="meta"><strong>Hidden Hand</strong> · Tab
+            <span class="dim">· peaks at 1:31 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/1790663" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/26747.mp3#t=226.2"></audio>
+          <div class="meta"><strong>Waltz Into the Moonlight</strong> · Tryad
+            <span class="dim">· peaks at 3:48 · score 0.04 ·
+            <a href="https://www.jamendo.com/track/26747" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Bagpipes">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Bagpipes</h3>
+        <input class="name" type="text" value="bagpipes" aria-label="Display name for Bagpipes">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.33 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/15655.mp3#t=308.0"></audio>
+          <div class="meta"><strong>Invisible Walls</strong> · Revolution Void
+            <span class="dim">· peaks at 5:09 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/15655" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/15664.mp3#t=197.9"></audio>
+          <div class="meta"><strong>Headphonetic</strong> · Revolution Void
+            <span class="dim">· peaks at 3:19 · score 0.04 ·
+            <a href="https://www.jamendo.com/track/15664" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/296236.mp3#t=54.2"></audio>
+          <div class="meta"><strong>August</strong> · Pianochocolate
+            <span class="dim">· peaks at 0:56 · score 0.01 ·
+            <a href="https://www.jamendo.com/track/296236" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Singing bowl">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Singing bowl</h3>
+        <input class="name" type="text" value="singing bowl" aria-label="Display name for Singing bowl">
+      </header>
+      <p class="dim">A top-3 tag on <strong>1</strong> tracks;
+        scores ≥ 0.1 on 1 of them · typical score 0.11 ·
+        highest 0.11</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/18239.mp3#t=51.6"></audio>
+          <div class="meta"><strong>Cemetery</strong> · Project Divinity
+            <span class="dim">· peaks at 0:53 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/18239" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1882761.mp3#t=70.0"></audio>
+          <div class="meta"><strong>No Rest Or Endless Rest</strong> · Lisofv
+            <span class="dim">· peaks at 1:12 · score 0.11 ·
+            <a href="https://www.jamendo.com/track/1882761" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/18232.mp3#t=82.1"></audio>
+          <div class="meta"><strong>Inside a Cocoon</strong> · Project Divinity
+            <span class="dim">· peaks at 1:24 · score 0.08 ·
+            <a href="https://www.jamendo.com/track/18232" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section><h2>Genres</h2>
+    <section class="card" data-class="Hip hop music">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Hip hop music</h3>
+        <input class="name" type="text" value="hip hop" aria-label="Display name for Hip hop music">
+      </header>
+      <p class="dim">A top-3 tag on <strong>40</strong> tracks;
+        scores ≥ 0.1 on 17 of them · typical score 0.08 ·
+        highest 0.33</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1847811.mp3#t=47.6"></audio>
+          <div class="meta"><strong>Dogg Pound</strong> · J1S
+            <span class="dim">· peaks at 0:49 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/1847811" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1863054.mp3#t=84.5"></audio>
+          <div class="meta"><strong>People on the TV</strong> · Mercury &amp;amp; The Architects
+            <span class="dim">· peaks at 1:26 · score 0.26 ·
+            <a href="https://www.jamendo.com/track/1863054" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1916728.mp3#t=62.4"></audio>
+          <div class="meta"><strong>Los money - Pueto pa lo mio records presenta Neycom Ft Choque Dineral</strong> · PUETO PA LO MIO RECORDS
+            <span class="dim">· peaks at 1:04 · score 0.20 ·
+            <a href="https://www.jamendo.com/track/1916728" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Heavy metal">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Heavy metal</h3>
+        <input class="name" type="text" value="metal" aria-label="Display name for Heavy metal">
+      </header>
+      <p class="dim">A top-3 tag on <strong>28</strong> tracks;
+        scores ≥ 0.1 on 21 of them · typical score 0.17 ·
+        highest 0.67</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/1813073.mp3#t=104.6"></audio>
+          <div class="meta"><strong>The Trap</strong> · Avenger Kills
+            <span class="dim">· peaks at 1:46 · score 0.67 ·
+            <a href="https://www.jamendo.com/track/1813073" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1857303.mp3#t=198.1"></audio>
+          <div class="meta"><strong>Fire fighter</strong> · Stefan Kartenberg
+            <span class="dim">· peaks at 3:20 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/1857303" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1813075.mp3#t=77.3"></audio>
+          <div class="meta"><strong>The Savior</strong> · Avenger Kills
+            <span class="dim">· peaks at 1:19 · score 0.59 ·
+            <a href="https://www.jamendo.com/track/1813075" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+    <section class="card" data-class="Jazz">
+      <header>
+        <label class="keep"><input type="checkbox" checked> keep</label>
+        <h3>Jazz</h3>
+        <input class="name" type="text" value="jazz" aria-label="Display name for Jazz">
+      </header>
+      <p class="dim">A top-3 tag on <strong>9</strong> tracks;
+        scores ≥ 0.1 on 3 of them · typical score 0.08 ·
+        highest 0.41</p>
+      <ol><li>
+          <audio controls preload="none" src="../data/tracks/161538.mp3#t=169.0"></audio>
+          <div class="meta"><strong>Constellation</strong> · Reno Project
+            <span class="dim">· peaks at 2:51 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/161538" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/1270604.mp3#t=166.4"></audio>
+          <div class="meta"><strong>Something You Said</strong> · Régis V. Gronoff
+            <span class="dim">· peaks at 2:48 · score 0.41 ·
+            <a href="https://www.jamendo.com/track/1270604" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li><li>
+          <audio controls preload="none" src="../data/tracks/15655.mp3#t=207.8"></audio>
+          <div class="meta"><strong>Invisible Walls</strong> · Revolution Void
+            <span class="dim">· peaks at 3:29 · score 0.33 ·
+            <a href="https://www.jamendo.com/track/15655" target="_blank" rel="noopener">Jamendo</a></span></div>
+        </li></ol>
+    </section>
+  <h2>Never a top-3 tag</h2>
+  <p class="dim">A capella, Bass drum, Child singing, Clarinet, Cymbal, Didgeridoo, Electronic organ, French horn, Hi-hat, Sitar, Snare drum, String section, Synthetic singing, Theremin, Timpani, Trombone, Tubular bells, Vibraphone, Wind chime</p>
+</main>
+<div class="bar">
+  <button class="primary" id="copy">Copy decisions</button>
+  <button id="download">Download JSON</button>
+</div>
+<script>
+  const KEY = "moodtune-tag-sheet";
+  const cards = [...document.querySelectorAll(".card")];
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+
+  function decisions() {
+    const out = {};
+    for (const c of cards) {
+      out[c.dataset.class] = {
+        keep: c.querySelector(".keep input").checked,
+        name: c.querySelector(".name").value.trim(),
+      };
+    }
+    return out;
+  }
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(decisions())); } catch (e) {}
+  }
+  for (const c of cards) {
+    const s = saved[c.dataset.class];
+    const keep = c.querySelector(".keep input"), name = c.querySelector(".name");
+    if (s) { keep.checked = s.keep; name.value = s.name; }
+    c.classList.toggle("dropped", !keep.checked);
+    keep.addEventListener("change", () => { c.classList.toggle("dropped", !keep.checked); persist(); });
+    name.addEventListener("input", persist);
+  }
+  // One player at a time.
+  document.addEventListener("play", e => {
+    for (const a of document.querySelectorAll("audio")) if (a !== e.target) a.pause();
+  }, true);
+
+  const json = () => JSON.stringify(decisions(), null, 2);
+  document.getElementById("copy").addEventListener("click", async e => {
+    try { await navigator.clipboard.writeText(json()); e.target.textContent = "Copied"; }
+    catch (err) { e.target.textContent = "Copy failed: use Download"; }
+    setTimeout(() => (e.target.textContent = "Copy decisions"), 2000);
+  });
+  document.getElementById("download").addEventListener("click", () => {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([json()], { type: "application/json" }));
+    a.download = "tag_decisions.json";
+    a.click();
+  });
+</script>
+</body>
+</html>

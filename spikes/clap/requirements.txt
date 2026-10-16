@@ -1,0 +1,17 @@
+# CLAP models (PyTorch reference implementation via Hugging Face)
+torch
+transformers>=4.40,<5
+# Audio decoding + DSP (same as the backend)
+librosa>=0.10.2
+soundfile
+numpy
+# Needed to import the backend's AudioAnalysisService as a baseline
+sentry-sdk
+pydantic-settings
+# Fetching Jamendo tracks
+httpx
+# YAMNet runs from its .tflite via LiteRT (the on-device runtime)
+ai-edge-litert
+# Step 2 (ONNX export / quantization) — used later
+onnx
+onnxruntime
