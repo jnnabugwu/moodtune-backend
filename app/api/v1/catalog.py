@@ -65,7 +65,7 @@ async def analyze_catalog_track(
     )
 
     # Save to history for authenticated users
-    if current_user is not None:
+    if current_user is not None and body.save_to_history:
         await crud_song_analysis.create_song_analysis(
             user_id=current_user["id"],
             track_name=body.track_name,

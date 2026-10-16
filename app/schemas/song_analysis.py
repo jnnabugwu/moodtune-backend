@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional, List
 
+from app.schemas.mood_observation import UserMood
+
 
 class PlaylistTrack(BaseModel):
     """Track information from a playlist."""
@@ -62,6 +64,10 @@ class SongAnalysisHistoryItem(BaseModel):
     artist_name: str
     mood_results: dict
     created_at: str
+    # "Does this feel right?" answer, joined from mood_observations when the
+    # row carries an observation_id. None until the user answers.
+    agrees: Optional[bool] = None
+    user_mood: Optional[UserMood] = None
 
 
 class SongAnalysisHistoryResponse(BaseModel):
