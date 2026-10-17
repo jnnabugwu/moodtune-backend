@@ -8,18 +8,32 @@ from app.core.config import settings
 from app.services.warmup import synthetic_wav, warm_up_audio_analysis
 
 
+_FALLBACK = {"tempo": 0.0}
+
+
 class _RecordingService:
-    def __init__(self, error=None):
+    """Records calls; `upload_error` / `song_error` make that path raise and
+    `song_fallback` makes the song path return its fallback features."""
+
+    def __init__(self, upload_error=None, song_error=None, song_fallback=False):
         self.calls = []
-        self.error = error
+        self.upload_error = upload_error
+        self.song_error = song_error
+        self.song_fallback = song_fallback
 
     def analyze_uploaded_audio(self, data, filename):
         self.calls.append(("upload", filename))
-        if self.error:
-            raise self.error
+        if self.upload_error:
+            raise self.upload_error
 
     def analyze_audio_bytes(self, data, filename):
         self.calls.append(("song", filename))
+        if self.song_error:
+            raise self.song_error
+        return _FALLBACK if self.song_fallback else {"tempo": 120.0}
+
+    def _default_features(self):
+        return _FALLBACK
 
 
 def test_synthetic_wav_is_ten_seconds_of_mono_16_bit_audio():
@@ -36,16 +50,31 @@ def test_warm_up_runs_upload_and_song_paths():
     assert service.calls == [("upload", "warmup.wav"), ("song", "warmup.wav")]
 
 
-def test_warm_up_failure_is_logged_not_raised(caplog):
-    service = _RecordingService(error=RuntimeError("no codec"))
+def test_upload_failure_still_warms_the_song_path(caplog):
+    service = _RecordingService(upload_error=RuntimeError("no codec"))
 
     assert warm_up_audio_analysis(service) is False
-    assert "warm-up failed" in caplog.text
+    assert service.calls == [("upload", "warmup.wav"), ("song", "warmup.wav")]
+    assert "Upload analysis warm-up failed" in caplog.text
+
+
+def test_song_failure_is_logged_not_raised(caplog):
+    service = _RecordingService(song_error=RuntimeError("boom"))
+
+    assert warm_up_audio_analysis(service) is False
+    assert "Song analysis warm-up failed" in caplog.text
+
+
+def test_song_fallback_features_count_as_a_failure(caplog):
+    service = _RecordingService(song_fallback=True)
+
+    assert warm_up_audio_analysis(service) is False
+    assert "fallback features" in caplog.text
 
 
 def test_warm_up_runs_the_real_analysis():
-    # Compiles librosa's numba code (~10 s); proves the synthetic clip
-    # exercises the production paths without falling over.
+    # Compiles librosa's numba code (~10 s). True means both paths ran and
+    # the song path produced real features, not its fallback.
     assert warm_up_audio_analysis() is True
 
 

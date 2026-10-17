@@ -43,20 +43,33 @@ def synthetic_wav(seconds: float = 10.0) -> bytes:
 def warm_up_audio_analysis(
     service: AudioAnalysisService = audio_analysis_service,
 ) -> bool:
-    """Runs each analysis path once. Never raises: a failed warm-up only
-    means the first real request is slow, so it must not block startup.
+    """Runs each analysis path once, independently, so one failing path
+    still leaves the other warm. Never raises: a failed warm-up only means
+    the first real request is slow, so it must not block startup.
 
     Returns whether every path ran.
     """
     audio = synthetic_wav()
     started = time.perf_counter()
+    ok = True
+
+    # Uploads and catalog tracks; failures raise.
     try:
-        # Uploads and catalog tracks.
         service.analyze_uploaded_audio(audio, "warmup.wav")
-        # Spotify songs (adds chroma features).
-        service.analyze_audio_bytes(audio, "warmup.wav")
     except Exception:
-        logger.exception("Audio analysis warm-up failed; first request will be slow")
-        return False
-    logger.info("Audio analysis warmed up in %.1fs", time.perf_counter() - started)
-    return True
+        logger.exception("Upload analysis warm-up failed; first request will be slow")
+        ok = False
+
+    # Spotify songs (adds chroma). This path logs its own failures and
+    # returns fallback features instead of raising, so check the result.
+    try:
+        features = service.analyze_audio_bytes(audio, "warmup.wav")
+        if features == service._default_features():
+            raise RuntimeError("song analysis returned fallback features")
+    except Exception:
+        logger.exception("Song analysis warm-up failed; first request will be slow")
+        ok = False
+
+    if ok:
+        logger.info("Audio analysis warmed up in %.1fs", time.perf_counter() - started)
+    return ok
