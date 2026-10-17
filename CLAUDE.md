@@ -24,6 +24,10 @@ pytest tests/ -v
 pytest tests/test_analysis.py -v
 ```
 
+CI (`.github/workflows/tests.yml`) runs `pytest tests -q` on Python 3.13 for every PR and every push to `main`, with no env file and no secrets. `pytest` is a required check: `main` only accepts changes that pass it, on a branch that is up to date with `main`, so direct pushes to `main` are rejected. `tests/conftest.py` overrides the Supabase, Spotify and Sentry settings before `app` is imported, so tests never reach a real project even when `dev.env` is present. Several `app/crud/` modules build a Supabase client at import time; mock the client in tests, since any unmocked call fails against the dead address.
+
+Schema changes are SQL files in `db/`, applied by hand to the Supabase project. Nothing migrates on deploy (no Alembic, despite `alembic.ini`), so apply the SQL to the live project before merging code that depends on it.
+
 ## Project structure
 
 ```
