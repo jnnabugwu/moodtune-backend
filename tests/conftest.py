@@ -24,6 +24,9 @@ _TEST_ENV = {
     "SPOTIFY_REDIRECT_URI": "http://127.0.0.1:9/spotify/callback",
     "SENTRY_ENABLE": "false",
     "SENTRY_DSN_BACKEND": "",
+    # The warm-up compiles librosa's numba code (~10 s); tests that need
+    # it call warm_up_audio_analysis directly.
+    "WARM_UP_ON_STARTUP": "false",
 }
 
 os.environ.update(_TEST_ENV)

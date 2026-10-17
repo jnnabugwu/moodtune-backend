@@ -1,3 +1,6 @@
+import asyncio
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import sentry_sdk
@@ -5,6 +8,7 @@ from sentry_sdk.integrations.fastapi import FastApiIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 from app.core.config import settings
 from app.api.v1.api import api_router
+from app.services.warmup import warm_up_audio_analysis
 
 # Initialize Sentry before creating the FastAPI app
 if settings.SENTRY_ENABLE and settings.SENTRY_DSN_BACKEND:
@@ -19,11 +23,21 @@ if settings.SENTRY_ENABLE and settings.SENTRY_DSN_BACKEND:
         send_default_pii=False,
     )
 
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    # Before serving: Railway's health check (and so traffic) waits for it.
+    if settings.WARM_UP_ON_STARTUP:
+        await asyncio.to_thread(warm_up_audio_analysis)
+    yield
+
+
 app = FastAPI(
     title="MoodTune API",
     description="A music mood analysis and playlist generation API",
     version="1.0.0",
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    lifespan=lifespan,
 )
 
 # Set up CORS
