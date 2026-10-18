@@ -7,6 +7,7 @@ from app.api.v1 import (
     catalog,
     mood_observations,
     app_config,
+    account,
 )
 
 api_router = APIRouter()
@@ -20,3 +21,4 @@ api_router.include_router(
     mood_observations.router, prefix="/mood-observations", tags=["mood-observations"]
 )
 api_router.include_router(app_config.router, tags=["config"])
+api_router.include_router(account.router, prefix="/account", tags=["account"])
