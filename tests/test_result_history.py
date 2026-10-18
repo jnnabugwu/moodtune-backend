@@ -48,7 +48,19 @@ def test_schema_maps_to_mood_results_with_both_engines():
         "backend_mood": "happy",
         "on_device_mood": "calm",
         "observation_id": body["observation_id"],
+        "title_from_filename": False,
     }
+
+
+def test_schema_stores_title_from_filename():
+    body = ResultHistoryCreate(**_body(title="Summer Vibes", title_from_filename=True))
+    assert body.to_mood_results()["title_from_filename"] is True
+
+
+def test_schema_defaults_title_from_filename_for_older_apps():
+    body = _body()
+    body.pop("title_from_filename", None)
+    assert ResultHistoryCreate(**body).to_mood_results()["title_from_filename"] is False
 
 
 def test_schema_accepts_backend_only_result():
@@ -144,6 +156,16 @@ def test_post_saves_result_for_caller(client, calls):
     assert saved["artist_name"] == ""
     assert saved["mood_results"]["backend_mood"] == "happy"
     assert saved["mood_results"]["on_device_mood"] == "calm"
+    assert saved["mood_results"]["title_from_filename"] is False
+
+
+def test_post_saves_title_from_filename(client, calls):
+    resp = TestClient(client).post(
+        "/api/v1/song/history", json=_body(title_from_filename=True)
+    )
+
+    assert resp.status_code == 201
+    assert calls["create"]["mood_results"]["title_from_filename"] is True
 
 
 def test_post_requires_auth(client):
