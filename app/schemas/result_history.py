@@ -25,6 +25,9 @@ class ResultHistoryCreate(BaseModel):
 
     source: ObservationSource
     title: Title
+    # True when the app made `title` from the upload's filename because the
+    # user typed none. Shares leave such titles out. Older apps omit it.
+    title_from_filename: bool = False
     artist: Optional[Artist] = None
     track_id: Optional[Annotated[str, StringConstraints(max_length=MAX_TRACK_ID_LENGTH)]] = None
     displayed_mood: Mood
@@ -55,6 +58,7 @@ class ResultHistoryCreate(BaseModel):
             "backend_mood": self.backend_mood,
             "on_device_mood": self.on_device_mood,
             "observation_id": str(self.observation_id) if self.observation_id else None,
+            "title_from_filename": self.title_from_filename,
         }
 
 
