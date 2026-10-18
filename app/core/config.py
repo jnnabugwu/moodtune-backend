@@ -78,6 +78,10 @@ class Settings(BaseSettings):
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
 
+    # Run one synthetic analysis per code path before serving requests, so
+    # librosa's numba code is compiled before the first user arrives.
+    WARM_UP_ON_STARTUP: bool = True
+
     # Sentry
     SENTRY_DSN_BACKEND: Optional[str] = None
     SENTRY_ENVIRONMENT: str = "development"
