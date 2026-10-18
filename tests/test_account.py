@@ -170,7 +170,12 @@ def test_spotify_failure_is_500_and_keeps_auth_user(app, calls, caplog):
 # AC4
 @pytest.mark.parametrize(
     "error",
-    [AuthApiError("Database error deleting user", 500), RuntimeError("timeout")],
+    [
+        AuthApiError("Database error deleting user", 500),
+        RuntimeError("timeout"),
+        # Only a structured 404 means "already gone", not matching text.
+        RuntimeError("upstream said: user not found"),
+    ],
 )
 def test_delete_user_failure_is_500(app, calls, caplog, error):
     calls["delete_user_error"] = error

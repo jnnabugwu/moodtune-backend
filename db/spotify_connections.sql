@@ -1,5 +1,11 @@
 -- Stored Spotify OAuth tokens, one row per user.
 --
+-- DOCUMENTATION, NOT A MIGRATION. The table already exists in the live
+-- project, so running this file does nothing there (CREATE TABLE IF NOT
+-- EXISTS is skipped) and does not reconcile or check anything. Verify the
+-- live table with the queries below and apply any fix as an explicit
+-- migration.
+--
 -- INFERRED FROM CODE, NOT DUMPED FROM THE LIVE PROJECT. This table was created
 -- by hand in Supabase before db/ existed. The columns below are what the code
 -- reads and writes (app/crud/spotify.py, app/services/spotify_api.py,
@@ -14,6 +20,22 @@
 --   SELECT conname, pg_get_constraintdef(oid)
 --   FROM pg_constraint
 --   WHERE conrelid = 'public.spotify_connections'::regclass;
+--
+--   -- RLS must be on: the table holds Spotify access and refresh tokens.
+--   SELECT relrowsecurity FROM pg_class
+--   WHERE oid = 'public.spotify_connections'::regclass;
+--
+--   SELECT grantee, privilege_type
+--   FROM information_schema.role_table_grants
+--   WHERE table_schema = 'public' AND table_name = 'spotify_connections'
+--     AND grantee IN ('anon', 'authenticated');
+--
+-- RLS IS UNVERIFIED. Only the backend's service-role key (which bypasses RLS)
+-- should touch this table, like mood_observations. If relrowsecurity is false
+-- or anon/authenticated hold grants, apply (NOT applied by this file):
+--
+--   ALTER TABLE spotify_connections ENABLE ROW LEVEL SECURITY;
+--   REVOKE ALL ON TABLE spotify_connections FROM anon, authenticated;
 --
 -- FK CASCADE IS UNVERIFIED. DELETE /account (app/services/account_service.py)
 -- deletes this user's row explicitly before deleting the auth user, so account

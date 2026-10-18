@@ -38,8 +38,10 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
     """
     Delete the signed-in user's account and the data tied to it.
 
-    204 on success, and also when the auth user is already gone, so the app
-    can retry safely. 500 with a generic detail if a step fails.
+    204 on success, and also when the auth user vanishes between the token
+    check and the delete (e.g. a concurrent request). A retry after a
+    successful deletion gets 401: the token's user no longer exists. 500 with
+    a generic detail if a step fails; retrying after a 500 is safe.
     """
     # Only ever the caller's own id: the service-role client bypasses RLS.
     user_id = current_user["id"]
